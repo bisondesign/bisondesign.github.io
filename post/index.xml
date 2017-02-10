@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Bison Design</title>
+    <link>http://bisondesign.net/post/index.xml</link>
+    <description>Recent content in Posts on Bison Design</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Feb 2017 15:31:02 -0500</lastBuildDate>
+    <atom:link href="http://bisondesign.net/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Welcome to Bison Design</title>
+      <link>http://bisondesign.net/post/bisondesign/</link>
+      <pubDate>Mon, 06 Feb 2017 15:31:02 -0500</pubDate>
+      
+      <guid>http://bisondesign.net/post/bisondesign/</guid>
+      <description>&lt;p&gt;Welcome to the Bison Design blog!&lt;/p&gt;
+
+&lt;p&gt;Crafting software is an art. My training in mathematics and decades of
+experience &lt;/br&gt;developing enterprise software gave me a unique perspective to
+appreciate its beauty. The search for simplicity influenced my designs and
+this is the subject of my blog.&lt;/p&gt;
+
+&lt;p&gt;I hope the excitement I feel upon finding that simplicity comes across in a way
+that is both educational and entertaining. If you find these pages interesting
+please share your insights in the comments.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
