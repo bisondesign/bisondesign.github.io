@@ -61,9 +61,9 @@ is needed for the impression of a responive UI.&lt;/p&gt;
 
 &lt;table&gt;
    &lt;tr&gt;
-      &lt;td&gt;&lt;img src=&#34;images/NewAccountDialogEmpty.png&#34;/&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;img src=&#34;images/NewAccountMissingPassword.png&#34;/&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;img src=&#34;images/NewAccountReadyToSubmit.png&#34;/&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&#34;http://bisondesign.net/images/NewAccountDialogEmpty.png&#34;/&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&#34;http://bisondesign.net/images/NewAccountMissingPassword.png&#34;/&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&#34;http://bisondesign.net/images/NewAccountReadyToSubmit.png&#34;/&gt;&lt;/td&gt;
    &lt;/tr&gt;
 &lt;/table&gt;
 
