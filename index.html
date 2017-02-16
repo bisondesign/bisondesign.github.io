@@ -92,6 +92,149 @@
         
 <article class="post post">
     <header class="post-header">
+        <h2 class="post-title"><a href="/post/fast-username-validation/">Fast Username Validation</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+          <section class="post-content">
+            
+
+<h3 id="success-leads-to-failure">Success leads to failure</h3>
+
+<p>You run a site where customers create an account with a user name and password.
+Your site is wildly successful and more customers flock to join. Soon all
+the good user names are taken. With all your success the fundamental user
+experience of creating an account begins to suck.</p>
+
+<p>Why? The first group of users naturally choose their first name. But there are
+4.8 million <em>James</em> in the United States and almost as many <em>Johns</em>. The
+<a href="http://names.mongabay.com/male_names.htm">twenty most common male names</a>
+account for 32 percent of the male population. There are about 4 million
+<em>Marys</em> and 1.6 million <em>Patricias</em>. Incredibly prospective customers are told,
+<em>&ldquo;Sorry, username &lsquo;Maurice&rsquo; is already taken&rdquo;</em>.</p>
+
+<p>First initial and last name will go a lot further. However, thanks to human
+psychology, we again run out of steam sooner than you expect. At my company,
+there were three John Lloyds. Some first names just sound better with a
+lastname like John and Lloyd. As a parent of five I can attest to thinking a
+lot about that.</p>
+
+<!-- img src="https://imgs.xkcd.com/comics/baby_names.png"/ -->
+
+<h3 id="username-validation-requirements">Username validation requirements</h3>
+
+<p>By the time you reach 50,000 users (congratulations, by the way) your sucky UI
+will require the user to make repeated attempts to find a name that is not
+taken. You need to fix this problem quickly. To improve the user experience
+your account creation UI needs to have these properties:</p>
+
+<ol>
+<li>Less than 0.1s latency when checking if a given name is taken</li>
+<li>A visual queue that the name being typed is not yet taken</li>
+</ol>
+
+<p>The visual queue could be a greyed out &ldquo;Submit&rdquo; button whenever the name is
+already taken. It could also be a pink background in the user name text input
+box. With these improvements, your customers will once again be able to choose
+a name easily without the heartbreak of repeated rejections.</p>
+
+<h3 id="knowing-what-you-don-t-know-probabilistic-data-structures">Knowing what you don&rsquo;t know: probabilistic data structures</h3>
+
+<p>This type of behavior should be done in JavaScript on the browser.
+Unfortunately, you can&rsquo;t just download a long list of taken names. Even a
+<a href="https://en.wikipedia.org/wiki/Trie">trie</a> is too big. A trie can compress
+common prefixes but the number of nodes is still proportional to the number of
+distinct names in the trie. The sheer number of names appears to make a client
+side solution impossible. Unless of course you are willing to trade off
+certainty for size.</p>
+
+<p>Enter a type of probablistic set called a <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom
+Filter</a>. Probabilistic algorithms
+behave like normal algorithms but have a theoretical chance of being wrong. The
+trade off is that they act faster or require less memory to produce the result.</p>
+
+<p>Unlike a trie, a Bloom Filter can compress both the letters and the number of
+words in a collection to an in-memory bit vector. You can&rsquo;t always trust that a
+true result for set membership is correct, but a simple formula gives
+staticstical limits on the number of false positives. Here is how it works.</p>
+
+<p>Suppose the bit vector has size M, where M is very large. To add user name S to
+the filter, compute k hash values ${h_0(S), h_1(S), &hellip;, h_k(S)}$ and set
+those bits to 1. The k hash functions should be <em>independent</em>. The numbers M
+and k are selected based on the expected number of names. Checking for the presence
+of a name involves calculating the same set of bits and testing it they are set.
+If even one of them is not set, then the name could not be present in the fitler.
+If, however, they are all set, the name is only likely to be present.</p>
+
+<p>The space advantage in a Bloom Filter comes from the compactness from the data
+structure. A Bloom filter with 1% error and an optimal value of k, requires
+only about 9.6 bits (1.2 bytes) per element — regardless of the size of the
+elements.  So a site with 50,000 user names would require 64K bytes for a filter.
+That&rsquo;s the size of a small (400x600) gif image.</p>
+
+<h3 id="edge-cases-and-recommendations">Edge cases and Recommendations</h3>
+
+<p>There is a delay between the time that the bloom filter is calculated on the
+server and when it is used on the client.  Suppose for the sake of argument that
+your site has 50,000 names and adds 600 more users every day.  The bloom filter
+may be recalculated 6 times a day and republished.</p>
+
+<p>If a new user happens to pick one if these 100 new user names before they are
+added they <em>might</em> still get a false negative.</p>
+
+<p>What do you do when a false negative happens? The simplest solution is to blame
+latency. The user does not know that we are calculating taken names locally
+using a Bloom Filter. The UI could optimistically send the names being typed
+(after a 0.5 second pause) on to the server to validate.  If the latency to
+your server is small, the additional check will only take an extra second.  If
+the name is indeed still not taken, the &ldquo;Submit&rdquo; button can be enabled.  If
+it happended to be among the 100 newly added names, that fact is sent to the
+client which adds the name to a stoplist of known taken names.  The stoplist
+can be uploaded along with the Bloom Filter.</p>
+
+<p>As you start out your web site all you really need is a stoplist to get the
+same user experience. One thousand 20 letter user names is only 20K
+un-compressed. Design your UX to scale up to 50 or 100 times as many users and
+change the test to use a bloom filter when the download size of the stoplist
+get&rsquo;s too big.</p>
+
+<h3 id="limitations-and-conclusion">Limitations and Conclusion</h3>
+
+<p>Facebook has over 1.8 billion active users.  A Bloom Filter solution will not scale
+to Facebook proportions.  In these cases validation happens on the server and the
+server suggests a number of untaken names to the user following certain patterns.
+Can you think of a way in which the giant could improve on this?</p>
+
+<p>Good luck and I hope you enjoyed my first real blog post.</p>
+
+          </section>
+      </p>
+      
+    </section>
+    <footer class="post-meta">
+        
+            <img class="author-thumb" src="http://bisondesign.net/images/bison.png" alt="Author image" nopin="nopin" />
+        
+        
+            Andrew Dobrowolski
+        
+        on
+            
+                <a href="http://bisondesign.net/tags/ux/">#UX</a>,
+            
+                <a href="http://bisondesign.net/tags/data-structure/">#data-structure</a>,
+            
+        
+        <time class="post-date" datetime="2017-02-07T20:21:11-05:00">
+            7 Feb 2017
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
         <h2 class="post-title"><a href="/post/bisondesign/">Welcome to Bison Design</a></h2>
     </header>
     <section class="post-excerpt">
@@ -137,15 +280,19 @@ please share your insights in the comments.</p>
 
 </main>
 
-    <footer class="site-footer clearfix">
-        <section class="copyright"><a href="">Bison Design</a> </section>
-        
-    </footer>
-    </div>
-    <script type="text/javascript" src="http://bisondesign.net/js/jquery.js"></script>
-    <script type="text/javascript" src="http://bisondesign.net/js/jquery.fitvids.js"></script>
-    <script type="text/javascript" src="http://bisondesign.net/js/index.js"></script>
+<footer class="site-footer clearfix">
+    <section class="copyright"><a href="">Bison Design</a> All rights reserved - 2017</section>
+    
+</footer>
+</div>
+<script type="text/javascript" src="http://bisondesign.net/js/jquery.js"></script>
+<script type="text/javascript" src="http://bisondesign.net/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="http://bisondesign.net/js/index.js"></script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
-</html>
 
+</html>
