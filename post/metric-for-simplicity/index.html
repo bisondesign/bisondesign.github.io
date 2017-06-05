@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" A Metric for Simplicity &middot;  Bison Design" />
+  	<meta property="og:site_name" content="Bison Design" />
+  	<meta property="og:url" content="http://bisondesign.net/post/metric-for-simplicity/" />
+    
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2017-06-01T00:00:00Z" />
+
+    
+    <meta property="og:article:tag" content="UX" />
+    
+    <meta property="og:article:tag" content="simplicity" />
+    
+    <meta property="og:article:tag" content="UI" />
+    
+    
+
+  <title>
+     A Metric for Simplicity &middot;  Bison Design
+  </title>
+
+    <meta name="description" content="Simplicity in Software Design" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://bisondesign.net/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://bisondesign.net/images/apple-touch-icon.png" />
+    
+    <link rel="stylesheet" type="text/css" href="http://bisondesign.net/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://bisondesign.net/index.xml" rel="alternate" type="application/rss+xml" title="Bison Design" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.18.1" />
+
+    <link rel="canonical" href="http://bisondesign.net/post/metric-for-simplicity/" />
+
+    
+<div id="particles-js"></div>
+
+</head>
+<body class="nav-closed">
+
+  
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header " style="background-image: url(http://bisondesign.net//images/screen.jpg)">
+    
+    <nav class="main-nav overlay clearfix">
+        
+            <a class="blog-logo" href="http://bisondesign.net/"><img src="http://bisondesign.net//images/bison.png" alt="Blog Logo" /></a>
+        
+        
+    </nav>
+<div class="vertical">
+        <div class="main-header-content inner">
+            <h1 class="page-title">
+              <a class="btn-bootstrap-2" href="#content">Bison Design</a>
+          </h1>
+          <h2 class="page-description">Simplicity in Software Design</h2>
+        </div>
+</div>
+    <a class="scroll-down icon-arrow-left" href="#content"><span class="hidden">Scroll Down</span></a>
+</header>
+
+  <main id="content" class="content" role="main">
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">A Metric for Simplicity</h1>
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-06-01T00:00:00Z">
+            Jun 1, 2017
+          </time>
+        
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/ux/">#UX</a></span>
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/simplicity/">#simplicity</a></span>
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/ui/">#UI</a></span>
+         
+        </section>
+    </header>
+  
+    <section class="post-content">
+      
+
+<h3 id="the-value-of-simplicity">The value of simplicity</h3>
+
+<p>The most complex requirement in software development is simplicity. In this post I
+will describe a technique for measuring the simplicity of a UI design. This can be
+used to choose the simplest design from a selection.</p>
+
+<p>I recently ran a training exercise in problem solving with an audience of 50
+top developers at a large corporation. Technology companies need to
+innovate in order to stay ahead of the competition but innovation requires
+problem solving.  But before we can solve problems we need to find them. For
+example, I never knew that I absolutely <em>had</em> to have a fingerprint reader on my
+phone until my wife got one. Whoever discovered that we all need a fingerprint
+reader was a genius.</p>
+
+<p>The true genious of this invention is that it is so simple; even a
+toddler can learn to unlock a phone if the parents are crazy enough to
+register his fingerprints on it. Simplification (represented by the meme &ldquo;Less
+if More&rdquo;) is part of solution refinement, the often skipped last step in problem
+solving.</p>
+
+<h3 id="the-meaning-of-simplicity">The meaning of simplicity</h3>
+
+<p>Simplicity has different manifestations in different domains. In mathematics it
+is often referred to as elegance. An elegant solution is clear, concise, and
+surprising. My favorite example is Cantor&rsquo;s demonstration that the real numbers
+are uncoutably infinite. Here he explains it to David Hilbert:</p>
+
+<p><img src="/images/Diagonal-Proof.png"/></p>
+
+<p>If Cantor&rsquo;s proof had been clunky, the result would have been just as
+beneficial to mathematicians. A clunky proof woudn&rsquo;t really matter as long as
+it was still correct. Still, elegant proofs are a delight to behold, even on
+repeated viewing.</p>
+
+<p>Simplicity in software matters. Your product (whether it&rsquo;s an app or a service)
+is not an end in itself but a means to an end. In the UI complexity impedes the
+end user from doing his task. In code complexity impedes maintainability. In
+software design complexity impedes flexibility. A clunky UI, a clunky design
+and a clunky implementation do matter.</p>
+
+<p>Simplicity in software design which closely resembles elegance in mathematics,
+is the subject of a future blog post. Here we will stick with the user
+experience and in particular simplicity in the UI.</p>
+
+<h3 id="a-model-for-the-interaction-of-a-human-with-the-ui">A model for the interaction of a human with the UI</h3>
+
+<p>A milestone in the field of usability in computer systems was the publication
+of &ldquo;The Psychology of Human-Computer Interaction&rdquo; by Card, Moran, and Newell
+(1983). The authors proposed a model of the &ldquo;Human processor&rdquo; citing ten
+scientific principles of operation, like <a href="https://en.wikipedia.org/wiki/Fitts's_law" title="Fitts's law - Wikipedia">Fitts&rsquo;s law</a> and the <a href="https://en.wikipedia.org/wiki/Power_law_of_practice" title="Power Law of Practice - Wikipedia">Power Law
+of Practice</a> based on empirical data.</p>
+
+
+<figure >
+    
+        <img src="/images/03-HumanProcessor_Card_Moran_Newell_1983.jpg" />
+    
+    
+</figure>
+
+
+<p>Models are useful for analysis. The suitability of a model can be judged by its
+predictive accuracy. Our model of human-computer interaction will be simpler
+than the image above which comes from the book, but it will use some of the same
+ideas.</p>
+
+<p>Suppose automated analysis could be added to a UI design tool such as
+<a href="https://balsamiq.com/">Balamiq Mockups</a> to help assess the usability of a UI for performing
+a specific task at the design stage. Given a task, the UI designer would click,
+type and drag to complete the actions needed to complete the task using the
+mock, imitating the future user. These would be recorded and analyzed.</p>
+
+<p>A UI can be designed to accomplish multiple tasks. For example, the same UI may
+be used to create an account or change a password: two distinct tasks. In that
+case both tasks would be considered in the analysis of the UI. These would not
+be given equal weight however. The weight of a task to a given persona will be
+proportional to its frequency. For example the number of times that task needs
+to be accomplished in a typical year, month or week.</p>
+
+<p>Being able to accomplish a task is not enough. That&rsquo;s basic suitability
+testing. Each interaction with and transition between UI components has a cost.
+Clicking on an item that is a big target costs less than if it were small. The
+distance the pointer has to move has a cost. Picking an item in a cluttered
+menu has a higher cost than clean ones. The sum of the costs is &ldquo;inefficiency&rdquo;.
+Our goal will be to minimize inefficiency over the task.</p>
+
+<p>Simplicity can be measured by the amount of &ldquo;ink&rdquo; or &ldquo;clutter&rdquo; in the UI. Less
+is more! In a good UI the quotient of task value, divided by simplicity and
+efficiency is the metric by which I will judge the UI.</p>
+
+<p>The sequence is not necessarily unique.  Sometimes the sequence is constrained,
+as when a button is disabled until certain fields are filled in properly.  These
+variation can be measured as well.</p>
+
+<p>This has gotten long enough.  In a future blog post I will discuss:</p>
+
+<ul>
+<li>the model of human behavior while interacting with a UI</li>
+<li>measuring the cost of learning a UI by repeated performance of the same tasks</li>
+<li>metric limitations, given different users have different experience levels</li>
+<li>use of deep learning to refine the model</li>
+</ul>
+
+<h3 id="references">References</h3>
+
+<p>[1] Card, Stuart K.; Moran, Thomas P.; Newell, Allen (1983). The Psychology of
+Human–Computer Interaction. Hillsdale, NJ: L. Erlbaum Associates. ISBN
+0898592437.</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="http://bisondesign.net/" style="background-image: url(http://bisondesign.net//images/bison.png)"><span class="hidden">Andrew Dobrowolski's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://bisondesign.net/">Andrew Dobrowolski</a></h4>
+  
+  <p>Software architect and lover of mathematics.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Ann Arbor, MI</span>
+    <span class="author-link icon-link"><a href="http://bisondesign.net/">http://bisondesign.net/</a></span>
+  </div>
+</section>
+
+
+
+    
+    <section class="share">
+      <h4>Share this post</h4>
+      <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=A%20Metric%20for%20Simplicity&amp;url=http%3a%2f%2fbisondesign.net%2fpost%2fmetric-for-simplicity%2f"
+          onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <span class="hidden">Twitter</span>
+      </a>
+      <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fbisondesign.net%2fpost%2fmetric-for-simplicity%2f"
+          onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <span class="hidden">Facebook</span>
+      </a>
+      <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fbisondesign.net%2fpost%2fmetric-for-simplicity%2f"
+         onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <span class="hidden">Google+</span>
+      </a>
+    </section>
+    
+
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'www-bisondesign-net';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+    
+
+  </footer>
+</article>
+
+</main>
+<footer class="site-footer clearfix">
+    <section class="copyright"><a href="">Bison Design</a> All rights reserved - 2017</section>
+    
+</footer>
+</div>
+<script type="text/javascript" src="http://bisondesign.net/js/jquery.js"></script>
+<script type="text/javascript" src="http://bisondesign.net/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="http://bisondesign.net/js/index.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

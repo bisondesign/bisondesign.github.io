@@ -11,13 +11,16 @@
     
     <item>
       <title>Fast Username Validation</title>
-      <link>http://bisondesign.net/post/fast-username-validation/fast-username-validation/</link>
+      <link>http://bisondesign.net/post/fast-username-validation/</link>
       <pubDate>Tue, 07 Feb 2017 20:21:11 -0500</pubDate>
       
-      <guid>http://bisondesign.net/post/fast-username-validation/fast-username-validation/</guid>
+      <guid>http://bisondesign.net/post/fast-username-validation/</guid>
       <description>
 
-&lt;h3 id=&#34;success-leads-to-failure&#34;&gt;Success leads to failure&lt;/h3&gt;
+&lt;h3 id=&#34;a-good-problem-to-have&#34;&gt;A Good Problem to Have&lt;/h3&gt;
+
+&lt;p&gt;This post describes a novel way to use probabilistic data structures to improve
+the user experience of creating a new account.&lt;/p&gt;
 
 &lt;p&gt;You run a site where customers create an account with a user name and password.
 Your site is wildly successful and more customers flock to join. Soon all
@@ -72,7 +75,7 @@ cases the background is pink when there is a problem.  The submit button
 is enabled only once all three problems are eliminated.  Doing all three
 checks on the client side leads to a repsonsive and simple user experience.&lt;/p&gt;
 
-&lt;h3 id=&#34;knowing-what-you-don-t-know-probabilistic-data-structures&#34;&gt;Knowing what you don&amp;rsquo;t know: probabilistic data structures&lt;/h3&gt;
+&lt;h3 id=&#34;probabilistic-data-structures&#34;&gt;Probabilistic data structures&lt;/h3&gt;
 
 &lt;p&gt;This type of behavior should be done in JavaScript on the browser.
 Unfortunately, you can&amp;rsquo;t just download a long list of taken names. Even a

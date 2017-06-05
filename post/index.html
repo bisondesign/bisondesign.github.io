@@ -43,8 +43,7 @@
 
     
 <div id="particles-js"></div>
-<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="http://bisondesign.net/js/particles.js"></script>   
+
 </head>
 <body class="nav-closed">
 
@@ -56,11 +55,11 @@
 
 
 
-	<header class="main-header" style="background-image: url(http://bisondesign.net/images/bison.jpg)">
+	<header class="main-header" style="background-image: url(http://bisondesign.net//images/screen.jpg)">
 
     <nav class="main-nav overlay clearfix">
       
-        <a class="blog-logo" href="http://bisondesign.net/"><img src="http://bisondesign.net/images/bison.png" alt="Home" /></a>
+        <a class="blog-logo" href="http://bisondesign.net/"><img src="http://bisondesign.net//images/bison.png" alt="Home" /></a>
       
       
         
@@ -96,14 +95,163 @@
 	   
 <article class="post post">
     <header class="post-header">
-        <h2 class="post-title"><a href="/post/fast-username-validation/fast-username-validation/">Fast Username Validation</a></h2>
+        <h2 class="post-title"><a href="/post/metric-for-simplicity/">A Metric for Simplicity</a></h2>
     </header>
     <section class="post-excerpt">
       <p>
           <section class="post-content">
             
 
-<h3 id="success-leads-to-failure">Success leads to failure</h3>
+<h3 id="the-value-of-simplicity">The value of simplicity</h3>
+
+<p>The most complex requirement in software development is simplicity. In this post I
+will describe a technique for measuring the simplicity of a UI design. This can be
+used to choose the simplest design from a selection.</p>
+
+<p>I recently ran a training exercise in problem solving with an audience of 50
+top developers at a large corporation. Technology companies need to
+innovate in order to stay ahead of the competition but innovation requires
+problem solving.  But before we can solve problems we need to find them. For
+example, I never knew that I absolutely <em>had</em> to have a fingerprint reader on my
+phone until my wife got one. Whoever discovered that we all need a fingerprint
+reader was a genius.</p>
+
+<p>The true genious of this invention is that it is so simple; even a
+toddler can learn to unlock a phone if the parents are crazy enough to
+register his fingerprints on it. Simplification (represented by the meme &ldquo;Less
+if More&rdquo;) is part of solution refinement, the often skipped last step in problem
+solving.</p>
+
+<h3 id="the-meaning-of-simplicity">The meaning of simplicity</h3>
+
+<p>Simplicity has different manifestations in different domains. In mathematics it
+is often referred to as elegance. An elegant solution is clear, concise, and
+surprising. My favorite example is Cantor&rsquo;s demonstration that the real numbers
+are uncoutably infinite. Here he explains it to David Hilbert:</p>
+
+<p><img src="/images/Diagonal-Proof.png"/></p>
+
+<p>If Cantor&rsquo;s proof had been clunky, the result would have been just as
+beneficial to mathematicians. A clunky proof woudn&rsquo;t really matter as long as
+it was still correct. Still, elegant proofs are a delight to behold, even on
+repeated viewing.</p>
+
+<p>Simplicity in software matters. Your product (whether it&rsquo;s an app or a service)
+is not an end in itself but a means to an end. In the UI complexity impedes the
+end user from doing his task. In code complexity impedes maintainability. In
+software design complexity impedes flexibility. A clunky UI, a clunky design
+and a clunky implementation do matter.</p>
+
+<p>Simplicity in software design which closely resembles elegance in mathematics,
+is the subject of a future blog post. Here we will stick with the user
+experience and in particular simplicity in the UI.</p>
+
+<h3 id="a-model-for-the-interaction-of-a-human-with-the-ui">A model for the interaction of a human with the UI</h3>
+
+<p>A milestone in the field of usability in computer systems was the publication
+of &ldquo;The Psychology of Human-Computer Interaction&rdquo; by Card, Moran, and Newell
+(1983). The authors proposed a model of the &ldquo;Human processor&rdquo; citing ten
+scientific principles of operation, like <a href="https://en.wikipedia.org/wiki/Fitts's_law" title="Fitts's law - Wikipedia">Fitts&rsquo;s law</a> and the <a href="https://en.wikipedia.org/wiki/Power_law_of_practice" title="Power Law of Practice - Wikipedia">Power Law
+of Practice</a> based on empirical data.</p>
+
+
+<figure >
+    
+        <img src="/images/03-HumanProcessor_Card_Moran_Newell_1983.jpg" />
+    
+    
+</figure>
+
+
+<p>Models are useful for analysis. The suitability of a model can be judged by its
+predictive accuracy. Our model of human-computer interaction will be simpler
+than the image above which comes from the book, but it will use some of the same
+ideas.</p>
+
+<p>Suppose automated analysis could be added to a UI design tool such as
+<a href="https://balsamiq.com/">Balamiq Mockups</a> to help assess the usability of a UI for performing
+a specific task at the design stage. Given a task, the UI designer would click,
+type and drag to complete the actions needed to complete the task using the
+mock, imitating the future user. These would be recorded and analyzed.</p>
+
+<p>A UI can be designed to accomplish multiple tasks. For example, the same UI may
+be used to create an account or change a password: two distinct tasks. In that
+case both tasks would be considered in the analysis of the UI. These would not
+be given equal weight however. The weight of a task to a given persona will be
+proportional to its frequency. For example the number of times that task needs
+to be accomplished in a typical year, month or week.</p>
+
+<p>Being able to accomplish a task is not enough. That&rsquo;s basic suitability
+testing. Each interaction with and transition between UI components has a cost.
+Clicking on an item that is a big target costs less than if it were small. The
+distance the pointer has to move has a cost. Picking an item in a cluttered
+menu has a higher cost than clean ones. The sum of the costs is &ldquo;inefficiency&rdquo;.
+Our goal will be to minimize inefficiency over the task.</p>
+
+<p>Simplicity can be measured by the amount of &ldquo;ink&rdquo; or &ldquo;clutter&rdquo; in the UI. Less
+is more! In a good UI the quotient of task value, divided by simplicity and
+efficiency is the metric by which I will judge the UI.</p>
+
+<p>The sequence is not necessarily unique.  Sometimes the sequence is constrained,
+as when a button is disabled until certain fields are filled in properly.  These
+variation can be measured as well.</p>
+
+<p>This has gotten long enough.  In a future blog post I will discuss:</p>
+
+<ul>
+<li>the model of human behavior while interacting with a UI</li>
+<li>measuring the cost of learning a UI by repeated performance of the same tasks</li>
+<li>metric limitations, given different users have different experience levels</li>
+<li>use of deep learning to refine the model</li>
+</ul>
+
+<h3 id="references">References</h3>
+
+<p>[1] Card, Stuart K.; Moran, Thomas P.; Newell, Allen (1983). The Psychology of
+Human–Computer Interaction. Hillsdale, NJ: L. Erlbaum Associates. ISBN
+0898592437.</p>
+
+          </section>
+      </p>
+      
+    </section>
+    <footer class="post-meta">
+        
+            <img class="author-thumb" src="http://bisondesign.net//images/bison.png" alt="Author image" nopin="nopin" />
+        
+        
+            Andrew Dobrowolski
+        
+        on
+            
+                <a href="http://bisondesign.net/tags/ux/">#UX</a>,
+            
+                <a href="http://bisondesign.net/tags/simplicity/">#simplicity</a>,
+            
+                <a href="http://bisondesign.net/tags/ui/">#UI</a>,
+            
+        
+        <time class="post-date" datetime="2017-06-01T00:00:00Z">
+            1 Jun 2017
+        </time>
+    </footer>
+</article>
+
+	
+	   
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/post/fast-username-validation/">Fast Username Validation</a></h2>
+    </header>
+    <section class="post-excerpt">
+      <p>
+          <section class="post-content">
+            
+
+<h3 id="a-good-problem-to-have">A Good Problem to Have</h3>
+
+<p>This post describes a novel way to use probabilistic data structures to improve
+the user experience of creating a new account.</p>
 
 <p>You run a site where customers create an account with a user name and password.
 Your site is wildly successful and more customers flock to join. Soon all
@@ -158,7 +306,7 @@ cases the background is pink when there is a problem.  The submit button
 is enabled only once all three problems are eliminated.  Doing all three
 checks on the client side leads to a repsonsive and simple user experience.</p>
 
-<h3 id="knowing-what-you-don-t-know-probabilistic-data-structures">Knowing what you don&rsquo;t know: probabilistic data structures</h3>
+<h3 id="probabilistic-data-structures">Probabilistic data structures</h3>
 
 <p>This type of behavior should be done in JavaScript on the browser.
 Unfortunately, you can&rsquo;t just download a long list of taken names. Even a
@@ -240,7 +388,7 @@ I will share some code for making fast username validation happen.</p>
     </section>
     <footer class="post-meta">
         
-            <img class="author-thumb" src="http://bisondesign.net/images/bison.png" alt="Author image" nopin="nopin" />
+            <img class="author-thumb" src="http://bisondesign.net//images/bison.png" alt="Author image" nopin="nopin" />
         
         
             Andrew Dobrowolski
@@ -278,13 +426,19 @@ this is the subject of my blog.</p>
 that is both educational and entertaining. If you find these pages interesting
 please share your insights in the comments.</p>
 
+<hr />
+
+<blockquote>
+<p>I work for P<span class="none"/>TC, a global provider of technology platforms and solutions for the Internet of Things (IoT).  I do not speak on behalf of my employer and my views do not necessarily reflect my employer&rsquo;s views.</p>
+</blockquote>
+
           </section>
       </p>
       
     </section>
     <footer class="post-meta">
         
-            <img class="author-thumb" src="http://bisondesign.net/images/bison.png" alt="Author image" nopin="nopin" />
+            <img class="author-thumb" src="http://bisondesign.net//images/bison.png" alt="Author image" nopin="nopin" />
         
         
             Andrew Dobrowolski
@@ -320,7 +474,7 @@ please share your insights in the comments.</p>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 </script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>

@@ -2,7 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://bisondesign.net/post/fast-username-validation/fast-username-validation/</loc>
+    <loc>http://bisondesign.net/post/metric-for-simplicity/</loc>
+    <lastmod>2017-06-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://bisondesign.net/post/fast-username-validation/</loc>
     <lastmod>2017-02-07T20:21:11-05:00</lastmod>
   </url>
   
@@ -13,7 +18,7 @@
   
   <url>
     <loc>http://bisondesign.net/</loc>
-    <lastmod>2017-02-07T20:21:11-05:00</lastmod>
+    <lastmod>2017-06-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -25,7 +30,13 @@
   
   <url>
     <loc>http://bisondesign.net/post/</loc>
-    <lastmod>2017-02-07T20:21:11-05:00</lastmod>
+    <lastmod>2017-06-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://bisondesign.net/tags/simplicity/</loc>
+    <lastmod>2017-06-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -35,8 +46,14 @@
   </url>
   
   <url>
+    <loc>http://bisondesign.net/tags/ui/</loc>
+    <lastmod>2017-06-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://bisondesign.net/tags/ux/</loc>
-    <lastmod>2017-02-07T20:21:11-05:00</lastmod>
+    <lastmod>2017-06-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
