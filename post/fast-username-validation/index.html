@@ -1,45 +1,68 @@
 <!DOCTYPE html>
 <html lang="en-us">
-
 <head>
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  	<meta property="og:title" content=" Fast Username Validation &middot;  Bison Design" />
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Fast Username Validation"/>
+<meta name="twitter:description" content=""/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Fast Username Validation &middot; Bison Design" />
   	<meta property="og:site_name" content="Bison Design" />
   	<meta property="og:url" content="http://bisondesign.net/post/fast-username-validation/" />
+
     
+        
+            <meta property="og:image" content="/images/screen.jpg"/>
+        
     
+
+    
+    <meta property="og:description" content="" />
   	<meta property="og:type" content="article" />
-
-    <meta property="og:article:published_time" content="2017-02-07T20:21:11-05:00" />
+    <meta property="article:published_time" content="2017-02-07T20:21:11-05:00" />
 
     
-    <meta property="og:article:tag" content="UX" />
+    <meta property="article:tag" content="UX" />
     
-    <meta property="og:article:tag" content="data-structure" />
+    <meta property="article:tag" content="data-structure" />
     
     
 
-  <title>
-     Fast Username Validation &middot;  Bison Design
-  </title>
+    <title>Fast Username Validation &middot; Bison Design</title>
 
-    <meta name="description" content="Simplicity in Software Design" />
+    
+    <meta name="description" content="A Good Problem to Have This post describes a novel way to use probabilistic data structures to improve the user experience of creating a new account.
+You run a " />
+    
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="http://bisondesign.net/images/favicon.ico">
-	  <link rel="apple-touch-icon" href="http://bisondesign.net/images/apple-touch-icon.png" />
-    
-    <link rel="stylesheet" type="text/css" href="http://bisondesign.net/css/screen.css" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
 
+    <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/css/nav.css" />
+
+    
+
+    
 
     
       
-          <link href="http://bisondesign.net/index.xml" rel="alternate" type="application/rss+xml" title="Bison Design" />
+          <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Bison Design" />
       
       
     
@@ -48,44 +71,133 @@
     <link rel="canonical" href="http://bisondesign.net/post/fast-username-validation/" />
 
     
-<div id="particles-js"></div>
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "logo": "http://bisondesign.net//images/bison.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://bisondesign.net//images/bison.png",
+            "width": 250,
+            "height": 250
+        }, 
+        
+        "url": "http://bisondesign.net/",
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ],
+        "description": "Software architect, Lover of mathematics."
+        
+    },
+    "headline": "Fast Username Validation",
+    "name": "Fast Username Validation",
+    "wordCount":  1169 ,
+    "timeRequired": "PT6M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": "en"
+    },
+    "url": "http://bisondesign.net/post/fast-username-validation/",
+    "datePublished": "2017-02-07T20:21Z",
+    "dateModified": "2017-02-07T20:21Z",
+    
+    "keywords": "UX, data-structure",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://bisondesign.net/post/fast-username-validation/"
+    }
+}
+    </script>
+    
 
+
+    
+
+    
+
+    
 </head>
 <body class="nav-closed">
 
-  
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/adobrowolski">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/">Blog</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
 
 
  <div class="site-wrapper">
 
 
 
-<header class="main-header " style="background-image: url(http://bisondesign.net//images/screen.jpg)">
-    
-    <nav class="main-nav overlay clearfix">
-        
-            <a class="blog-logo" href="http://bisondesign.net/"><img src="http://bisondesign.net//images/bison.png" alt="Blog Logo" /></a>
-        
-        
-    </nav>
-<div class="vertical">
-        <div class="main-header-content inner">
-            <h1 class="page-title">
-              <a class="btn-bootstrap-2" href="#content">Bison Design</a>
-          </h1>
-          <h2 class="page-description">Simplicity in Software Design</h2>
-        </div>
-</div>
-    <a class="scroll-down icon-arrow-left" href="#content"><span class="hidden">Scroll Down</span></a>
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="http://bisondesign.net/"><img src="/images/bison.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
 </header>
 
-  <main id="content" class="content" role="main">
+
+
+<main class="content" role="main">
+
+
 
 
   <article class="post post">
 
     <header class="post-header">
         <h1 class="post-title">Fast Username Validation</h1>
+        <small></small>
+
         <section class="post-meta">
         
           <time class="post-date" datetime="2017-02-07T20:21:11-05:00">
@@ -99,7 +211,7 @@
          
         </section>
     </header>
-  
+
     <section class="post-content">
       
 
@@ -245,7 +357,7 @@ I will share some code for making fast username validation happen.</p>
 
     
     <figure class="author-image">
-        <a class="img" href="http://bisondesign.net/" style="background-image: url(http://bisondesign.net//images/bison.png)"><span class="hidden">Andrew Dobrowolski's Picture</span></a>
+        <a class="img" href="http://bisondesign.net/" style="background-image: url(/images/bison.png)"><span class="hidden">Andrew Dobrowolski's Picture</span></a>
     </figure>
     
 
@@ -258,7 +370,7 @@ I will share some code for making fast username validation happen.</p>
 <section class="author">
   <h4><a href="http://bisondesign.net/">Andrew Dobrowolski</a></h4>
   
-  <p>Software architect and lover of mathematics.</p>
+  <p>Software architect, Lover of mathematics.</p>
   
   <div class="author-meta">
     <span class="author-location icon-location">Ann Arbor, MI</span>
@@ -269,55 +381,80 @@ I will share some code for making fast username validation happen.</p>
 
 
     
-    <section class="share">
-      <h4>Share this post</h4>
-      <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Fast%20Username%20Validation&amp;url=http%3a%2f%2fbisondesign.net%2fpost%2ffast-username-validation%2f"
-          onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-          <span class="hidden">Twitter</span>
-      </a>
-      <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fbisondesign.net%2fpost%2ffast-username-validation%2f"
-          onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-          <span class="hidden">Facebook</span>
-      </a>
-      <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fbisondesign.net%2fpost%2ffast-username-validation%2f"
-         onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-          <span class="hidden">Google+</span>
-      </a>
-    </section>
-    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Fast%20Username%20Validation&nbsp;-&nbsp;Bison%20Design&amp;url=http%3a%2f%2fbisondesign.net%2fpost%2ffast-username-validation%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fbisondesign.net%2fpost%2ffast-username-validation%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2fbisondesign.net%2fpost%2ffast-username-validation%2f&amp;description=Fast%20Username%20Validation"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fbisondesign.net%2fpost%2ffast-username-validation%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
 
     
-    
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-      var disqus_shortname = 'www-bisondesign-net';
-      (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    
-    
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'www-bisondesign-net';
+  var disqus_url = 'http:\/\/bisondesign.net\/post\/fast-username-validation\/';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
 
   </footer>
 </article>
 
 </main>
-<footer class="site-footer clearfix">
-    <section class="copyright"><a href="">Bison Design</a> All rights reserved - 2017</section>
+
+
+  <aside class="read-next">
+  
+      <a class="read-next-story" style="no-cover" href="/post/metric-for-simplicity/">
+          <section class="post">
+              <h2>A Metric for Simplicity</h2>
+              
+          </section>
+      </a>
+  
+  
+      <a class="read-next-story prev" style="no-cover" href="/post/bisondesign/">
+          <section class="post">
+              <h2>Welcome to Bison Design</h2>
+          </section>
+      </a>
+  
+</aside>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Bison Design</a> All rights reserved - 2017</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
     
-</footer>
-</div>
-<script type="text/javascript" src="http://bisondesign.net/js/jquery.js"></script>
-<script type="text/javascript" src="http://bisondesign.net/js/jquery.fitvids.js"></script>
-<script type="text/javascript" src="http://bisondesign.net/js/index.js"></script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-</script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
-
 </html>
+

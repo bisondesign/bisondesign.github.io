@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:image" content="/images/jj-thompson-142854.jpg"/>
+    
+
+
+
+<meta name="twitter:title" content="SOLID Web UI Components"/>
+<meta name="twitter:description" content=""/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="SOLID Web UI Components &middot; Bison Design" />
+  	<meta property="og:site_name" content="Bison Design" />
+  	<meta property="og:url" content="http://bisondesign.net/post/solid-UI-components/" />
+
+    
+       <meta property="og:image" content="/images/jj-thompson-142854.jpg"/>
+    
+
+    
+    <meta property="og:description" content="" />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-06-07T20:21:11-05:00" />
+
+    
+    <meta property="article:tag" content="UX" />
+    
+    <meta property="article:tag" content="Design" />
+    
+    
+
+    <title>SOLID Web UI Components &middot; Bison Design</title>
+
+    
+    <meta name="description" content="Introduction The five fundamental principles of Object Oriented Design known by the acronym SOLID are well known in the software community (SOLID). Originally e" />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/css/nav.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Bison Design" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.18.1" />
+
+    <link rel="canonical" href="http://bisondesign.net/post/solid-UI-components/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "logo": "http://bisondesign.net//images/bison.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://bisondesign.net//images/bison.png",
+            "width": 250,
+            "height": 250
+        }, 
+        
+        "url": "http://bisondesign.net/",
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ],
+        "description": "Software architect, Lover of mathematics."
+        
+    },
+    "headline": "SOLID Web UI Components",
+    "name": "SOLID Web UI Components",
+    "wordCount":  2062 ,
+    "timeRequired": "PT10M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": "en"
+    },
+    "url": "http://bisondesign.net/post/solid-UI-components/",
+    "datePublished": "2017-06-07T20:21Z",
+    "dateModified": "2017-06-07T20:21Z",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://bisondesign.net//images/jj-thompson-142854.jpg",
+        "width": 3000,
+        "height": 1445
+    },
+    
+    "keywords": "UX, Design",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://bisondesign.net/post/solid-UI-components/"
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/adobrowolski">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/">Blog</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+  
+  <header class="main-header post-head" style="background-image: url(/images/jj-thompson-142854.jpg)">
+  
+  <nav class="main-nav overlay clearfix">
+
+
+  
+      <a class="blog-logo" href="http://bisondesign.net/"><img src="/images/bison.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">SOLID Web UI Components</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-06-07T20:21:11-05:00">
+            Jun 7, 2017
+          </time>
+        
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/ux/">#UX</a></span>
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/design/">#Design</a></span>
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      
+
+<h3 id="introduction">Introduction</h3>
+
+<p>The five fundamental principles of Object Oriented Design known by the acronym
+SOLID are well known in the software community (<a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">SOLID</a>). Originally
+expressed by Robert C. Martin, these principles will allow a system to be more
+easily maintained and extended over time. A side effect of these principles is
+that the resulting system is loosely coupled.</p>
+
+<p>Similar principles would help the maintainability and evolution of complex UI
+components in a multi vendor environment. Components are part of the view of an
+MV* framework. The job of the view is to expose the model in the UI. The use of
+composition in UI component design supports rapid development. It is one of the
+many benefits obtained from using UI frameworks with existing libraries of
+components. However the direct use of simpler components in a composite
+component can lead to tight coupling and fragility. Also, the desire to reuse
+components that are close but not a perfect match for requirements can lead to
+the copying of those components, making upgrades difficult.</p>
+
+<p>SOLID Web UI design patterns would address these issues.</p>
+
+<h3 id="solid-in-ui-component-design">SOLID in UI Component Design</h3>
+
+<p>Here are five principles whose initials form the acronym SOLID.  Each
+has its own acronym as well.</p>
+
+<table>
+<thead>
+<tr>
+<th>Initial</th>
+<th>Acronym</th>
+<th>Concept</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>S</td>
+<td>SRP</td>
+<td>Single responsibility principle</td>
+</tr>
+
+<tr>
+<td>O</td>
+<td>OCP</td>
+<td>Open/closed principle</td>
+</tr>
+
+<tr>
+<td>L</td>
+<td>LSP</td>
+<td>Liskov substitution principle</td>
+</tr>
+
+<tr>
+<td>I</td>
+<td>ISP</td>
+<td>Interface segregation principle</td>
+</tr>
+
+<tr>
+<td>D</td>
+<td>DIP</td>
+<td>Dependency inversion principle</td>
+</tr>
+</tbody>
+</table>
+
+<p>The argument from object oriented design is meant as an analogy. Still many of
+the same principles apply to UI components. While <a href="http://patternlab.io/">atomic</a> design
+approaches to UI design are not new, they have different goals.</p>
+
+<p>The first three SOLID principles moderate the behavior of components and their
+extensions.</p>
+
+<ul>
+<li><p><strong>Single responsibility principle.</strong> Components that take responsibility for
+more than one thing can end up doing nothing well (explaining why there aren&rsquo;t
+that many successful brain surgeon barbers). Complex UI&rsquo;s should be built up
+from simple components by composition.</p></li>
+
+<li><p><strong>Open for extension but closed for modification.</strong> Once released, vendors
+must never modify a component&rsquo;s behavior (contract). For the sake of reuse
+components must also support extension.</p></li>
+
+<li><p><strong>Liskov substitution Principle.</strong> Components should support extensions.
+Extension developers must ensure that the extended object still satisfies the
+behavior contract of the base. If not the extension will seem buggy.</p></li>
+</ul>
+
+<p>The last two SOLID principles support reuse through abstraction. Abstraction is
+indirection based on type. Unlike objects, which have one interface, components
+have two interfaces. The type of data that can be bound to a component and the
+binding behavior (e.g. one-way vs two-way) supported by the component define
+its model-facing interface. The configuration of the component, its supported
+events, and the view contexts in which it can be used define its view-facing
+interface. In theory a component could be replaced by any other that supports
+the same two interfaces.</p>
+
+<ul>
+<li><p><strong>Interface segregation principle.</strong> If vendors combine simple components into
+more complex components then the “interfaces” that define the bindings should
+be factored. Broad interfaces are a pain to implement if all you need is a
+narrow one. Customizers will be forced to create facades to bind to instead
+of binding to the model directly.</p></li>
+
+<li><p><strong>Dependency inversion principle.</strong> Composition is a great way of building up
+complexity. Dependency inversion means identifying dependencies with interfaces and
+satisfying them only at run time (referred to as &lsquo;wiring&rsquo; the entity). The</p></li>
+</ul>
+
+<h3 id="solid-ui-component-use-case">SOLID UI Component Use Case</h3>
+
+<p>Frameworks like Angular 2.0, Aurelia, and React use components to support the
+creation of Web UIs. HTML 5 supports the creation of Web Components natively.
+So why do we need the five SOLID patterns to govern our use of web components?
+In most cases they are not needed since Web UIs are small and static.</p>
+
+<p>A more disciplined approach is needed when a library of components is created
+by a vendor and reused at scale by the customers of that vendor. The same is
+true when the vendor is one department of an organization creating a library to
+be used by other departments. In both of these cases updating the library must
+be seamless, from the point of view of the &ldquo;customers&rdquo;.</p>
+
+<p>This is where SOLID shines.  These principles allow maximum reuse with minimal
+coupling between the components as a means to productivity and robustness.</p>
+
+<p>Reuse comes in two dimensions. The first is akin to &ldquo;inheritance&rdquo; when a
+component is extended to add features or modify presentation without breaking
+the contract of the base component. In this case the extension can act as a
+plug-in replacement for the base.</p>
+
+<p>Extension can be done with direct references to the base component to keep the
+implementation simple. Avoiding indirection is a pragmatic decision since
+indirection always comes at a price (e.g., cognitive complexity and performance
+to name a few).  Extensions are typically done at a lower level, for example
+when creating new widgets for a library.</p>
+
+<p>The second type of reuse is when simpler components are combined into more
+complex components. This is a more typical scenario done at a higher level when
+pages or mashups are being designed. In this scenario the references to the
+inner components should remain abstract allowing the wiring to a concrete
+component to be done on initialization. The decision can vary by context and
+configuration and even by data type.  So for example, a table of items in a
+shopping cart can choose a &ldquo;template&rdquo; to instantiate based on the type of item.</p>
+
+<p>In both case (extension and composition) the bindings of the inner components
+to the model are left open to be hooked up dynamically to the model at run
+time.  View facing configuration (related to layout) should be hard-coded.</p>
+
+<h3 id="implementation">Implementation</h3>
+
+<p>The ability to create components is built into HTML 5. <a href="https://en.wikipedia.org/wiki/Web_Components">Web Components</a> are
+a group of standards proposed as a W3C specification. They allow you to create
+new HTML elements that are reusable, composable, and encapsulated. How do you
+write SOLID UI components as HTML 5 web components?</p>
+
+<p>You will want to start by splitting your components in to modules. When
+projects get to a certain size, they will have to deal sooner or later with the
+&lsquo;dependency hell&rsquo; problem. This happens when two different versions of the same
+library are needed at the same time.</p>
+
+<p>Binding is always done on the client, as that is where the events are triggered
+and consumed.  Static binding is too restrictive as well, as the shopping cart
+example showed.</p>
+
+<p>There are two distinct paths we can pursue for wiring (creating the view tree
+with dependency resolution) depending on where it will take place. It can be
+done on the client using templates, or it can be done dynamically on the
+server as data is added to the model that needs to be displayed in the view. I
+prefer a template approach on the client. Templates can be stored in HTML, the
+approach chosen by Aurelia.</p>
+
+<pre><code class="language-html">&lt;template id=&quot;aboutOurTeam&quot;&gt;
+  &lt;h1&gt;About&lt;/h1&gt;
+  &lt;hr&gt;
+  &lt;p class=&quot;lead&quot;&gt;${aboutMessage}&lt;/p&gt;
+  &lt;hr&gt;
+  &lt;h2&gt;Our Team&lt;/h2&gt;
+  &lt;div repeat.for=&quot;p of profiles&quot;&gt;
+    &lt;compose model.bind=&quot;p&quot; view-model=&quot;profile&quot;&gt;&lt;/compose&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+
+<p>Here the page <a href="https://html.spec.whatwg.org/multipage/scripting.html#the-template-element">template</a>, given a binding context that includes a &lsquo;profiles&rsquo;
+array can loop over the entries of this array and for each include a &lsquo;profile&rsquo;
+view model binding it&rsquo;s context to the given entry. The context for the template is
+established when it is adopted into the DOM tree of the view.</p>
+
+<pre><code class="language-javascript"> var template = document.querySelector('#aboutOurTeam');
+ for (var i = 0; i &lt; data.length; i += 1) {
+   var cat = data[i];
+   var clone = template.content.cloneNode(true);
+   var cells = clone.querySelectorAll('td');
+   // ... establish context and recursively compose children
+   template.parentNode.appendChild(clone);
+ }
+</code></pre>
+
+<p>The <code>compose</code> element in the example above is a <a href="https://w3c.github.io/webcomponents/spec/custom/">custom web element</a>
+defined by Aurelia.</p>
+
+<p>How is this approach SOLID?</p>
+
+<ul>
+<li><p>SRP: The &lsquo;AboutOurTeam&rsquo; view model has a single responsibility. Composition
+and binding allow the templates themselves to remain simple. Here the focus is
+on the headings, message, and the list of team members.</p></li>
+
+<li><p>OCP: Extending a template can be done by means of the <a href="https://w3c.github.io/webcomponents/spec/shadow/">Shadow DOM</a>,
+another HTML 5 feature. This allows an element&rsquo;s content to be replaced by
+completely encapsulated HTML markup that has access to the original element.</p>
+
+<blockquote>
+<p>Aside. Suppose you created a widget that contained an <code>h2</code>, a <code>p</code> and a text
+<code>input</code> field to allow users to rate the content (the text can be <code>*</code> to <code>*****</code>).
+Now you wanted to replace the input field with a star rater. It is possible to
+shadow the original widget, keeping the <code>h2</code> and <code>p</code> visible while displaying a star
+rater widget whose value feeds the invisible text field.</p>
+</blockquote></li>
+
+<li><p>LSP: Careful delegation to the base of an extended component, as in the above
+example, ensures that the original contract is honored.  The component interacts
+with the user in a different way - its view-facing interface has changed - but it
+will still be plug-in compatible with the original widget component.</p></li>
+
+<li><p>ISP: Models are JavaScript objects. They can be decomposed into arrays, maps,
+or primitive values (string, number, or boolean). Loops decompose arrays. Name
+bindings decompose maps. Finally, primitives can have only a finite set of
+semantic types (e.g. number can represent an integer, decimal, money,
+percentage, distance, time, etc). These few semantic types make it possible to
+support a finite set of primitive interfaces for data binding.</p></li>
+
+<li><p>DIP: The &lsquo;AboutOurTeam&rsquo; view model had a dependency on the <code>profile</code> view model.
+This dependency may resolve to a concrete type (<code>profile.html</code> and <code>profile.js</code> in
+aurelia).  But you can imagine a system where additional logic was involved in
+selecting a view model using additional information about the data instance to be
+bound and also the context.  In particular resolution can take into consideration:</p>
+
+<ul>
+<li>Context in the view</li>
+<li>The type of data being bound (e.g. an extension of <code>profile</code>)</li>
+<li>User based configuration</li>
+</ul></li>
+</ul>
+
+<h3 id="missing-details">Missing Details</h3>
+
+<p><strong>Dynamic Behavior</strong>. I have not touched on the more dynamic aspects of the UI
+such as binding and support for events. Needless to say this alone is a vast
+area already well covered by many frameworks. For example a <a href="http://redux.js.org">reactive</a>
+approach that eschews binding and relies for events alone would work well. But
+other approaches would also work.</p>
+
+<p><strong>Extension</strong>. The approach given here needs a more concrete description of how
+to use the shadow DOM to extend components without modification (OCP). Some
+methods to simplify the repetitive aspects of extension and to preserve the
+contract of the base (LSP) would be needed as well.</p>
+
+<p><strong>Base Properties</strong>. All components should derive from a common base class to
+supply the view-facing interface. Common properties would include an id, a
+name, x, y &amp; z coordinates, width and height, and a boolean for visibility.</p>
+
+<p><strong>Events</strong>.  Events (e.g., onClick) that are specific to a component type (the
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget">EventTarget</a>,
+e.g. <code>button</code>) will be present on all instances of that type. Listeners must
+register with the target and implement the event listener interface:</p>
+
+<pre><code class="language-javascript">interface EventListener {
+  void handleEvent(in Event evt);
+}
+</code></pre>
+
+<p>All the information needed by the listener will be present in the
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Event">Event</a> object,
+including the target object. Event listeners can subscribe to one or more
+events. Likewise, one or more listeners can subscribe to any given event
+(making it a multi-cast event).</p>
+
+<p><strong>Other Properties</strong>.  The properties of the base and derived component
+share these characteristics:</p>
+
+<ol>
+<li>they can be bound for reading (if binding is supported)</li>
+<li>they are exposed as attributes of the element</li>
+<li>they are exposed programmatically via setter and getter methods</li>
+<li>they can be tested in css for conditional formatting</li>
+</ol>
+
+<p><strong>Composition</strong>. The method by which multiple components are composed into a
+compound component should be defined. The interface of the compound component
+is the union of the interfaces of the children components that are bindable
+from the aggregate.</p>
+
+<p><strong>Dependency Injection</strong>.  The DIP is already implemented in some systems via
+dependency injection.  This is the case with Aurelia for example.  In others
+it will require explicit wiring code.  The wiring should check compatibility
+of a component with the interface that it must satisfy. Wiring can still be
+done manually but the exact mechanism must be explained.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>In this blog I introduced the concept of SOLID Web UI components. I explained
+how these five principles borrowed from software design can be applied to
+component design and when they should be applied. By following these principles
+a custom UI will be less likely to break when the underlying libraries are
+upgraded. Finally, I showed how extensibility can be integrated into a UI
+component library using some HTML 5 features and existing frameworks.</p>
+
+<p>In the future I would like to implement <a href="http://todomvc.com/">http://todomvc.com/</a> using
+this approach.</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="http://bisondesign.net/" style="background-image: url(/images/bison.png)"><span class="hidden">Andrew Dobrowolski's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://bisondesign.net/">Andrew Dobrowolski</a></h4>
+  
+  <p>Software architect, Lover of mathematics.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Ann Arbor, MI</span>
+    <span class="author-link icon-link"><a href="http://bisondesign.net/">http://bisondesign.net/</a></span>
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=SOLID%20Web%20UI%20Components&nbsp;-&nbsp;Bison%20Design&amp;url=http%3a%2f%2fbisondesign.net%2fpost%2fsolid-UI-components%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fbisondesign.net%2fpost%2fsolid-UI-components%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2fbisondesign.net%2fpost%2fsolid-UI-components%2f&amp;description=SOLID%20Web%20UI%20Components"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fbisondesign.net%2fpost%2fsolid-UI-components%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'www-bisondesign-net';
+  var disqus_url = 'http:\/\/bisondesign.net\/post\/solid-UI-components\/';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+  </footer>
+</article>
+
+</main>
+
+
+  <aside class="read-next">
+  
+  
+      <a class="read-next-story prev" style="no-cover" href="/post/metric-for-simplicity/">
+          <section class="post">
+              <h2>A Metric for Simplicity</h2>
+          </section>
+      </a>
+  
+</aside>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Bison Design</a> All rights reserved - 2017</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+    
+</body>
+</html>
+
