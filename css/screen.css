@@ -576,6 +576,13 @@ body.nav-opened .site-wrapper {
     width: 80%;
 }
 
+/* Background button on main title */
+.main-header .vertical {
+    display: table-cell;
+    vertical-align: top;
+    padding: 40px;
+}
+
 .main-header a.bloglogo {
     text-decoration: none;
 }
