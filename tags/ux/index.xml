@@ -85,8 +85,11 @@ has its own acronym as well.&lt;/p&gt;
 &lt;/table&gt;
 
 &lt;p&gt;The argument from object oriented design is meant as an analogy. Still many of
-the same principles apply to UI components. While &lt;a href=&#34;http://patternlab.io/&#34;&gt;atomic&lt;/a&gt; design
-approaches to UI design are not new, they have different goals.&lt;/p&gt;
+the same principles apply to UI components. Just like complex classes are built
+up from simpler classes, complex components can be built from simpler ones.
+While &lt;a href=&#34;http://patternlab.io/&#34;&gt;atomic&lt;/a&gt; approaches to UI design are not new, they have different
+goals.  Decomposition is a response to complexity.  SOLID design is a response
+to fragility in the face of change; it builds on decomposition.&lt;/p&gt;
 
 &lt;p&gt;The first three SOLID principles moderate the behavior of components and their
 extensions.&lt;/p&gt;
@@ -129,12 +132,12 @@ satisfying them only at run time (referred to as &amp;lsquo;wiring&amp;rsquo; th
 
 &lt;h3 id=&#34;solid-ui-component-use-case&#34;&gt;SOLID UI Component Use Case&lt;/h3&gt;
 
-&lt;p&gt;Frameworks like Angular 2.0, Aurelia, and React use components to support the
+&lt;p&gt;Frameworks like Angular, Aurelia, and React use components to support the
 creation of Web UIs. HTML 5 supports the creation of Web Components natively.
 So why do we need the five SOLID patterns to govern our use of web components?
-In most cases they are not needed since Web UIs are small and static.&lt;/p&gt;
+In most cases they are &lt;em&gt;not&lt;/em&gt; needed since most Web UIs are small and static.&lt;/p&gt;
 
-&lt;p&gt;A more disciplined approach is needed when a library of components is created
+&lt;p&gt;The disciplined approach is needed when a library of components is created
 by a vendor and reused at scale by the customers of that vendor. The same is
 true when the vendor is one department of an organization creating a library to
 be used by other departments. In both of these cases updating the library must
@@ -143,13 +146,13 @@ be seamless, from the point of view of the &amp;ldquo;customers&amp;rdquo;.&lt;/
 &lt;p&gt;This is where SOLID shines.  These principles allow maximum reuse with minimal
 coupling between the components as a means to productivity and robustness.&lt;/p&gt;
 
-&lt;p&gt;Reuse comes in two dimensions. The first is akin to &amp;ldquo;inheritance&amp;rdquo; when a
+&lt;p&gt;Reuse comes in two flavors. The first type is akin to &amp;ldquo;inheritance&amp;rdquo; when a
 component is extended to add features or modify presentation without breaking
 the contract of the base component. In this case the extension can act as a
 plug-in replacement for the base.&lt;/p&gt;
 
 &lt;p&gt;Extension can be done with direct references to the base component to keep the
-implementation simple. Avoiding indirection is a pragmatic decision since
+implementation simple. Using explicit references in an extension is pragmatic since
 indirection always comes at a price (e.g., cognitive complexity and performance
 to name a few).  Extensions are typically done at a lower level, for example
 when creating new widgets for a library.&lt;/p&gt;
