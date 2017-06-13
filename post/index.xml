@@ -606,10 +606,10 @@ I will share some code for making fast username validation happen.&lt;/p&gt;
       <guid>http://bisondesign.net/post/bisondesign/</guid>
       <description>&lt;p&gt;Welcome to the Bison Design blog!&lt;/p&gt;
 
-&lt;p&gt;Crafting software is an art. My training in mathematics and decades of
-experience &lt;/br&gt;developing enterprise software gave me a unique perspective to
-appreciate its beauty. The search for simplicity influenced my designs and
-this is the subject of my blog.&lt;/p&gt;
+&lt;p&gt;I believe that crafting software is an art. My training in mathematics and
+decades of experience developing enterprise software gave me a unique
+perspective to appreciate software design. The search for simplicity influenced
+my work and this is the subject of my blog.&lt;/p&gt;
 
 &lt;p&gt;I hope the excitement I feel upon finding that simplicity comes across in a way
 that is both educational and entertaining. If you find these pages interesting
@@ -618,7 +618,9 @@ please share your insights in the comments.&lt;/p&gt;
 &lt;hr /&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;I work for P&lt;span class=&#34;none&#34;/&gt;TC, a global provider of technology platforms and solutions for the Internet of Things (IoT).  I do not speak on behalf of my employer and my views do not necessarily reflect my employer&amp;rsquo;s views.&lt;/p&gt;
+&lt;p&gt;I work for &lt;a href=&#34;https://www.ptc.com/&#34;&gt;PTC&lt;/a&gt;, a global provider of
+solutions and technology platforms for IoT and AR. I do not speak on behalf of
+my employer and my views do not necessarily reflect my employer&amp;rsquo;s views.&lt;/p&gt;
 &lt;/blockquote&gt;
 </description>
     </item>
