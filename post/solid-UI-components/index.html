@@ -108,7 +108,7 @@
     },
     "headline": "SOLID Web UI Components",
     "name": "SOLID Web UI Components",
-    "wordCount":  2103 ,
+    "wordCount":  2102 ,
     "timeRequired": "PT10M",
     "inLanguage": {
       "@type": "Language",
@@ -352,7 +352,7 @@ be seamless, from the point of view of the &ldquo;customers&rdquo;.</p>
 <p>This is where SOLID shines.  These principles allow maximum reuse with minimal
 coupling between the components as a means to productivity and robustness.</p>
 
-<p>Reuse comes in two flavors. The first type is akin to &ldquo;inheritance&rdquo; when a
+<p>Reuse comes in two flavors. The first type is &ldquo;inheritance&rdquo; where a
 component is extended to add features or modify presentation without breaking
 the contract of the base component. In this case the extension can act as a
 plug-in replacement for the base.</p>
@@ -363,17 +363,19 @@ indirection always comes at a price (e.g., cognitive complexity and performance
 to name a few).  Extensions are typically done at a lower level, for example
 when creating new widgets for a library.</p>
 
-<p>The second type of reuse is when simpler components are combined into more
-complex components. This is a more typical scenario done at a higher level when
-pages or mashups are being designed. In this scenario the references to the
-inner components should remain abstract allowing the wiring to a concrete
-component to be done on initialization. The decision can vary by context and
-configuration and even by data type.  So for example, a table of items in a
-shopping cart can choose a &ldquo;template&rdquo; to instantiate based on the type of item.</p>
+<p>The second type of reuse is &ldquo;composition&rdquo; where simpler components are combined
+into more complex components. This is a more typical scenario done at a higher
+level when pages or mashups are being designed. In this scenario the references
+to the inner components should remain abstract allowing the wiring to a
+concrete implementation on initialization. The decision can vary by context and
+configuration and even by data type. So for example, a UI showing a list of
+items in a shopping cart can choose the component to instantiate based on the
+type of item.</p>
 
-<p>In both case (extension and composition) the bindings of the inner components
-to the model are left open to be hooked up dynamically to the model at run
-time.  View facing configuration (related to layout) should be hard-coded.</p>
+<p>The bindings of the inner components should be established once their context
+is defined. This is true regardless of the reuse type (extension and
+composition). The view facing configuration of inner components (related to
+layout) can be hard-coded.</p>
 
 <h3 id="implementation">Implementation</h3>
 
