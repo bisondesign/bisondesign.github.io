@@ -113,7 +113,7 @@ behavior contract of the base. If not the extension will seem buggy.&lt;/p&gt;&l
 &lt;p&gt;The last two SOLID principles support reuse through abstraction. Abstraction is
 indirection based on type. Unlike objects, which have one interface, components
 have two interfaces. The type of data that can be bound to a component and the
-binding behavior (e.g. one-way vs two-way) supported by the component define
+binding behavior (e.g. one-way vs two-way) define
 its model-facing interface. The configuration of the component, its supported
 events, and the view contexts in which it can be used define its view-facing
 interface. In theory a component could be replaced by any other that supports
@@ -122,13 +122,13 @@ the same two interfaces.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Interface segregation principle.&lt;/strong&gt; If vendors combine simple components into
 more complex components then the “interfaces” that define the bindings should
-be factored. Broad interfaces are a pain to implement if all you need is a
+be factored. Broad interfaces are painful to implement if all you need is a
 narrow one. Customizers will be forced to create facades to bind to instead
 of binding to the model directly.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Dependency inversion principle.&lt;/strong&gt; Composition is a great way of building up
 complexity. Dependency inversion means identifying dependencies with interfaces and
-satisfying them only at run time (referred to as &amp;lsquo;wiring&amp;rsquo; the entity). The&lt;/p&gt;&lt;/li&gt;
+satisfying them dynamically (referred to as &amp;lsquo;wiring&amp;rsquo; the entity).&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;solid-ui-component-use-case&#34;&gt;SOLID UI Component Use Case&lt;/h3&gt;
@@ -624,6 +624,15 @@ please share your insights in the comments.&lt;/p&gt;
 platforms for IoT and AR. My opinions are my own.&lt;/p&gt;
 &lt;/blockquote&gt;
 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://bisondesign.net/post/solid-UI-components-go/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://bisondesign.net/post/solid-UI-components-go/</guid>
+      <description></description>
     </item>
     
   </channel>
