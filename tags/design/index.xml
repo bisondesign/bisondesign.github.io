@@ -173,10 +173,10 @@ layout) can be hard-coded.&lt;/p&gt;
 
 &lt;h3 id=&#34;implementation&#34;&gt;Implementation&lt;/h3&gt;
 
-&lt;p&gt;The ability to create components is built into HTML 5. &lt;a href=&#34;https://en.wikipedia.org/wiki/Web_Components&#34;&gt;Web Components&lt;/a&gt; are
-a group of standards proposed as a W3C specification. They allow you to create
-new HTML elements that are reusable, composable, and encapsulated. How do you
-write SOLID UI components as HTML 5 web components?&lt;/p&gt;
+&lt;p&gt;The ability to create components on the client side is built into HTML 5.
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Web_Components&#34;&gt;Web Components&lt;/a&gt; are a group of standards proposed as a W3C specification.
+They allow you to create new HTML elements that are reusable, composable, and
+encapsulated. How do you write SOLID UI components as HTML 5 web components?&lt;/p&gt;
 
 &lt;p&gt;You will want to start by splitting your components in to modules. When
 projects get to a certain size, they will have to deal sooner or later with the
