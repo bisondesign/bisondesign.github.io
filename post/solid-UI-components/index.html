@@ -109,8 +109,8 @@
     },
     "headline": "SOLID Web UI Components",
     "name": "SOLID Web UI Components",
-    "wordCount":  2097 ,
-    "timeRequired": "PT10M",
+    "wordCount":  2205 ,
+    "timeRequired": "PT11M",
     "inLanguage": {
       "@type": "Language",
       "alternateName": "en"
@@ -312,30 +312,43 @@ from simple components by composition.</p></li>
 must never modify a component&rsquo;s behavior (contract). For the sake of reuse
 components must also support extension.</p></li>
 
-<li><p><strong>Liskov substitution Principle.</strong> Components should support extensions.
-Extension developers must ensure that the extended object still satisfies the
+<li><p><strong>Liskov substitution principle.</strong> Components should support extensions.
+Extension developers must ensure that the extended component still satisfies the
 behavior contract of the base. If not the extension will seem buggy.</p></li>
 </ul>
 
-<p>The last two SOLID principles support reuse through abstraction. Abstraction is
-indirection based on type. Unlike objects, which have one interface, components
-have two interfaces. The type of data that can be bound to a component and the
-binding behavior (e.g. one-way vs two-way) define
-its model-facing interface. The configuration of the component, its supported
-events, and the view contexts in which it can be used define its view-facing
-interface. In theory a component could be replaced by any other that supports
-the same two interfaces.</p>
+<p>The last two SOLID principles support reuse through extension. Component
+extension leads to the formation of a component type system, so long as the
+Liskov substitution principle is followed. Then extension can only add
+behavior, leading to a subtype.</p>
+
+<p>Unlike objects, which have one interface, components have two interfaces. The
+type of data that can be bound to a component and the binding behavior (e.g.
+one-way vs two-way) define its model-facing interface. The configuration of the
+component, its supported events, and the view contexts in which it can be used
+define its view-facing interface. One component in a UI could be replaced by
+any other that supports the same two interfaces. In theory, it would be
+sufficient to implement only the model-facing interface since the user will be
+able to figure out an reasonable interaction model. So we will use the
+unqualified term interface to mean the model-facing interface below.</p>
+
+<p>A component that implements only the model-facing interface can be thought of
+as an abstract base class representing that interface. Extensions can add
+view-facing behavior.</p>
+
+<p>This definition of component interfaces leads us to examine the last two SOLID
+principles.</p>
 
 <ul>
-<li><p><strong>Interface segregation principle.</strong> If vendors combine simple components into
-more complex components then the “interfaces” that define the bindings should
-be factored. Broad interfaces are painful to implement if all you need is a
-narrow one. Customizers will be forced to create facades to bind to instead
-of binding to the model directly.</p></li>
+<li><p><strong>Interface segregation principle.</strong> If vendors combine simple components
+into more complex components then the “interfaces” that define the bindings
+should be factored to be as simple as possible. Broad interfaces are painful to
+implement if all you need is a narrow one. It is certainly possible for one
+component to implement multiple factored interfaces.</p></li>
 
 <li><p><strong>Dependency inversion principle.</strong> Composition is a great way of building up
-complexity. Dependency inversion means identifying dependencies with interfaces and
-satisfying them dynamically (referred to as &lsquo;wiring&rsquo; the entity).</p></li>
+complexity. Dependency inversion means identifying dependencies with interfaces
+and satisfying them dynamically (referred to as &lsquo;wiring&rsquo; the entity).</p></li>
 </ul>
 
 <h3 id="solid-ui-component-use-case">SOLID UI Component Use Case</h3>
@@ -345,14 +358,15 @@ creation of Web UIs. HTML 5 supports the creation of Web Components natively.
 So why do we need the five SOLID patterns to govern our use of web components?
 In most cases they are <em>not</em> needed since most Web UIs are small and static.</p>
 
-<p>The disciplined approach is needed when a library of components is created
-by a vendor and reused at scale by the customers of that vendor. The same is
-true when the vendor is one department of an organization creating a library to
-be used by other departments. In both of these cases updating the library must
-be seamless, from the point of view of the &ldquo;customers&rdquo;.</p>
+<p>However, a more disciplined approach is needed when a library of components is
+created by a vendor and reused at scale by the customers of that vendor. The
+same is true when the vendor is one department of an organization creating a
+library to be used by other departments. In both of these cases updating the
+library must be seamless, from the point of view of the &ldquo;customers&rdquo;.</p>
 
-<p>This is where SOLID shines.  These principles allow maximum reuse with minimal
-coupling between the components as a means to productivity and robustness.</p>
+<p>This is where SOLID component design shines. These principles allow maximum
+reuse with minimal coupling between the components as a means to productivity
+and robustness.</p>
 
 <p>Reuse comes in two flavors. The first type is &ldquo;inheritance&rdquo; where a
 component is extended to add features or modify presentation without breaking
@@ -395,7 +409,7 @@ library are needed at the same time.</p>
 and consumed.  Static binding is too restrictive as well, as the shopping cart
 example showed.</p>
 
-<p>There are two distinct paths we can pursue for wiring (creating the view tree
+<p>There are two distinct approaches we can pursue for wiring (creating the view tree
 with dependency resolution) depending on where it will take place. It can be
 done on the client using templates, or it can be done dynamically on the
 server as data is added to the model that needs to be displayed in the view. I

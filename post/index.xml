@@ -105,30 +105,43 @@ from simple components by composition.&lt;/p&gt;&lt;/li&gt;
 must never modify a component&amp;rsquo;s behavior (contract). For the sake of reuse
 components must also support extension.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Liskov substitution Principle.&lt;/strong&gt; Components should support extensions.
-Extension developers must ensure that the extended object still satisfies the
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Liskov substitution principle.&lt;/strong&gt; Components should support extensions.
+Extension developers must ensure that the extended component still satisfies the
 behavior contract of the base. If not the extension will seem buggy.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The last two SOLID principles support reuse through abstraction. Abstraction is
-indirection based on type. Unlike objects, which have one interface, components
-have two interfaces. The type of data that can be bound to a component and the
-binding behavior (e.g. one-way vs two-way) define
-its model-facing interface. The configuration of the component, its supported
-events, and the view contexts in which it can be used define its view-facing
-interface. In theory a component could be replaced by any other that supports
-the same two interfaces.&lt;/p&gt;
+&lt;p&gt;The last two SOLID principles support reuse through extension. Component
+extension leads to the formation of a component type system, so long as the
+Liskov substitution principle is followed. Then extension can only add
+behavior, leading to a subtype.&lt;/p&gt;
+
+&lt;p&gt;Unlike objects, which have one interface, components have two interfaces. The
+type of data that can be bound to a component and the binding behavior (e.g.
+one-way vs two-way) define its model-facing interface. The configuration of the
+component, its supported events, and the view contexts in which it can be used
+define its view-facing interface. One component in a UI could be replaced by
+any other that supports the same two interfaces. In theory, it would be
+sufficient to implement only the model-facing interface since the user will be
+able to figure out an reasonable interaction model. So we will use the
+unqualified term interface to mean the model-facing interface below.&lt;/p&gt;
+
+&lt;p&gt;A component that implements only the model-facing interface can be thought of
+as an abstract base class representing that interface. Extensions can add
+view-facing behavior.&lt;/p&gt;
+
+&lt;p&gt;This definition of component interfaces leads us to examine the last two SOLID
+principles.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Interface segregation principle.&lt;/strong&gt; If vendors combine simple components into
-more complex components then the “interfaces” that define the bindings should
-be factored. Broad interfaces are painful to implement if all you need is a
-narrow one. Customizers will be forced to create facades to bind to instead
-of binding to the model directly.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Interface segregation principle.&lt;/strong&gt; If vendors combine simple components
+into more complex components then the “interfaces” that define the bindings
+should be factored to be as simple as possible. Broad interfaces are painful to
+implement if all you need is a narrow one. It is certainly possible for one
+component to implement multiple factored interfaces.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Dependency inversion principle.&lt;/strong&gt; Composition is a great way of building up
-complexity. Dependency inversion means identifying dependencies with interfaces and
-satisfying them dynamically (referred to as &amp;lsquo;wiring&amp;rsquo; the entity).&lt;/p&gt;&lt;/li&gt;
+complexity. Dependency inversion means identifying dependencies with interfaces
+and satisfying them dynamically (referred to as &amp;lsquo;wiring&amp;rsquo; the entity).&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;solid-ui-component-use-case&#34;&gt;SOLID UI Component Use Case&lt;/h3&gt;
@@ -138,14 +151,15 @@ creation of Web UIs. HTML 5 supports the creation of Web Components natively.
 So why do we need the five SOLID patterns to govern our use of web components?
 In most cases they are &lt;em&gt;not&lt;/em&gt; needed since most Web UIs are small and static.&lt;/p&gt;
 
-&lt;p&gt;The disciplined approach is needed when a library of components is created
-by a vendor and reused at scale by the customers of that vendor. The same is
-true when the vendor is one department of an organization creating a library to
-be used by other departments. In both of these cases updating the library must
-be seamless, from the point of view of the &amp;ldquo;customers&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;However, a more disciplined approach is needed when a library of components is
+created by a vendor and reused at scale by the customers of that vendor. The
+same is true when the vendor is one department of an organization creating a
+library to be used by other departments. In both of these cases updating the
+library must be seamless, from the point of view of the &amp;ldquo;customers&amp;rdquo;.&lt;/p&gt;
 
-&lt;p&gt;This is where SOLID shines.  These principles allow maximum reuse with minimal
-coupling between the components as a means to productivity and robustness.&lt;/p&gt;
+&lt;p&gt;This is where SOLID component design shines. These principles allow maximum
+reuse with minimal coupling between the components as a means to productivity
+and robustness.&lt;/p&gt;
 
 &lt;p&gt;Reuse comes in two flavors. The first type is &amp;ldquo;inheritance&amp;rdquo; where a
 component is extended to add features or modify presentation without breaking
@@ -188,7 +202,7 @@ library are needed at the same time.&lt;/p&gt;
 and consumed.  Static binding is too restrictive as well, as the shopping cart
 example showed.&lt;/p&gt;
 
-&lt;p&gt;There are two distinct paths we can pursue for wiring (creating the view tree
+&lt;p&gt;There are two distinct approaches we can pursue for wiring (creating the view tree
 with dependency resolution) depending on where it will take place. It can be
 done on the client using templates, or it can be done dynamically on the
 server as data is added to the model that needs to be displayed in the view. I
