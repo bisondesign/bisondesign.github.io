@@ -483,7 +483,7 @@ account for 32 percent of the male population. There are about 4 million
 &lt;p&gt;First initial and last name will go a lot further. However, thanks to human
 psychology, we again run out of steam sooner than you expect. At my company,
 there were three John Lloyds. Some first names just sound better with a
-lastname like John and Lloyd. As a parent of five I can attest to thinking a
+last name like John and Lloyd. As a parent of five I can attest to thinking a
 lot about that.&lt;/p&gt;
 
 &lt;!-- img src=&#34;https://imgs.xkcd.com/comics/baby_names.png&#34;/ --&gt;
@@ -505,7 +505,7 @@ to be simple and responsive.  It should have these properties:&lt;/p&gt;
 already taken. It could also be a pink background in the user name text input
 box. With these improvements, your customers will once again be able to choose
 a name easily without the heartbreak of repeated rejections. The low latency
-is needed for the impression of a responive UI.&lt;/p&gt;
+is needed for the impression of a responsive UI.&lt;/p&gt;
 
 &lt;table&gt;
    &lt;tr&gt;
@@ -519,7 +519,7 @@ is needed for the impression of a responive UI.&lt;/p&gt;
 taken username, a weak password, and a non-matching confirmation. In all
 cases the background is pink when there is a problem.  The submit button
 is enabled only once all three problems are eliminated.  Doing all three
-checks on the client side leads to a repsonsive and simple user experience.&lt;/p&gt;
+checks on the client side leads to a responsive and simple user experience.&lt;/p&gt;
 
 &lt;h3 id=&#34;probabilistic-data-structures&#34;&gt;Probabilistic data structures&lt;/h3&gt;
 
@@ -539,7 +539,7 @@ trade off is that they act faster or require less memory to produce the result.&
 &lt;p&gt;A Bloom Filter is a probabilistic (unreliable) set. Unlike a trie, a Bloom
 Filter can compress both the letters and the number of words in a collection to
 an in-memory bit vector. You can&amp;rsquo;t always trust that a true result from testing
-set membership is correct, but a simple formula gives staticstical limits on
+set membership is correct, but a simple formula gives statistical limits on
 the number of false positives. Here is how it works.&lt;/p&gt;
 
 &lt;p&gt;Suppose the bit vector has size M, where M is very large. To add user name S to
@@ -547,7 +547,7 @@ the filter, compute k hash values ${h_0(S), h_1(S), &amp;hellip;, h_k(S)}$ and s
 those bits to 1. The k hash functions should be &lt;em&gt;independent&lt;/em&gt;. The numbers M
 and k are selected based on the expected number of names. Checking for the presence
 of a name involves calculating the same set of bits and testing it they are set.
-If even one of them is not set, then the name could not be present in the fitler.
+If even one of them is not set, then the name could not be present in the filter.
 If, however, they are all set, the name is only likely to be present.&lt;/p&gt;
 
 &lt;p&gt;The space advantage in a Bloom Filter comes from the compactness from the data
@@ -576,21 +576,21 @@ using a Bloom Filter. The UI could optimistically send the names being typed
 (after a 0.5 second pause) on to the server to validate.  If the latency to
 your server is small, the additional check will only take an extra second.  If
 the name is indeed still not taken, the &amp;ldquo;Submit&amp;rdquo; button can be enabled.  If
-it happended to be among the 100 newly added names, that fact is sent to the
-client which adds the name to a stoplist of known taken names.  The stoplist
+it happened to be among the 100 newly added names, that fact is sent to the
+client which adds the name to a stop-list of known taken names.  The stop-list
 can be uploaded along with the Bloom Filter.&lt;/p&gt;
 
-&lt;p&gt;As you start out your web site all you really need is a stoplist to get the
+&lt;p&gt;As you start out your web site all you really need is a stop-list to get the
 same user experience. One thousand 20 letter user names is only 20K
 un-compressed. Design your UX to scale up to 50 or 100 times as many users and
-change the test to use a bloom filter when the download size of the stoplist
-get&amp;rsquo;s too big.&lt;/p&gt;
+change the test to use a bloom filter when the download size of the stop-list
+gets too big.&lt;/p&gt;
 
 &lt;h3 id=&#34;limitations-and-conclusion&#34;&gt;Limitations and Conclusion&lt;/h3&gt;
 
 &lt;p&gt;Facebook has over 1.8 billion active users. A Bloom Filter solution will not
 scale to Facebook proportions. Google has the same &amp;lsquo;problem&amp;rsquo;. In these cases
-validation happens on the server and the server suggests a number of untaken
+validation happens on the server and the server suggests a number of unused
 names to the user following certain patterns. Can you think of a way in which
 the giant could improve on this?&lt;/p&gt;
 
