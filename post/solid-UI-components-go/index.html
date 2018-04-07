@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:image" content="/images/samuel-zeller-39197.jpg"/>
+    
+
+
+
+<meta name="twitter:title" content="Implementing SOLID UI Components using Go"/>
+<meta name="twitter:description" content=""/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Implementing SOLID UI Components using Go &middot; Bison Design" />
+  	<meta property="og:site_name" content="Bison Design" />
+  	<meta property="og:url" content="http://bisondesign.net/post/solid-UI-components-go/" />
+
+    
+       <meta property="og:image" content="/images/samuel-zeller-39197.jpg"/>
+    
+
+    
+    <meta property="og:description" content="" />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-06-07T20:21:11-05:00" />
+
+    
+    <meta property="article:tag" content="UX" />
+    
+    <meta property="article:tag" content="Design" />
+    
+    
+
+    <title>Implementing SOLID UI Components using Go &middot; Bison Design</title>
+
+    
+    <meta name="description" content="Introduction SOLID principles have been applied to OOP software design in order to make software less rigid, less fragile, reusable, and more natural. In a prev" />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/css/prism.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Bison Design" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.18.1" />
+
+    <link rel="canonical" href="http://bisondesign.net/post/solid-UI-components-go/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "logo": "http://bisondesign.net//images/bison.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://bisondesign.net//images/bison.png",
+            "width": 250,
+            "height": 250
+        }, 
+        
+        "url": "http://bisondesign.net/",
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ],
+        "description": "Software architect, Lover of mathematics."
+        
+    },
+    "headline": "Implementing SOLID UI Components using Go",
+    "name": "Implementing SOLID UI Components using Go",
+    "wordCount":  724 ,
+    "timeRequired": "PT4M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": "en"
+    },
+    "url": "http://bisondesign.net/post/solid-UI-components-go/",
+    "datePublished": "2017-06-07T20:21Z",
+    "dateModified": "2017-06-07T20:21Z",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://bisondesign.net//images/samuel-zeller-39197.jpg",
+        "width": 3000,
+        "height": 1445
+    },
+    
+    "keywords": "UX, Design",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://bisondesign.net/post/solid-UI-components-go/"
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, 
+        {
+              delimiters: [
+                  {left: "$$", right: "$$", display: true},
+                  {left: "\\[", right: "\\]", display: true},
+                  {left: "$", right: "$", display: false},
+                  {left: "\\(", right: "\\)", display: false}
+              ]
+          }
+        );
+      });
+    </script>
+
+    
+
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/adobrowolski">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/">Blog</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+  
+  <header class="main-header post-head" style="background-image: url(/images/samuel-zeller-39197.jpg)">
+  
+  <nav class="main-nav overlay clearfix">
+
+
+  
+      <a class="blog-logo" href="http://bisondesign.net/"><img src="/images/bison.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Implementing SOLID UI Components using Go</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-06-07T20:21:11-05:00">
+            Jun 7, 2017
+          </time>
+        
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/ux/">#UX</a></span>
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/design/">#Design</a></span>
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      
+
+<h3 id="introduction">Introduction</h3>
+
+<p>SOLID principles have been applied to OOP software design in order to make
+software less rigid, less fragile, reusable, and more natural. In a previous
+<a href="/post/solid-UI-components/">blog post</a> I talked about applying SOLID
+principles to Web components. I gave a very high overview of a client side
+implementation of SOLID components using an HTML5 technology called Web
+Components. It turns out that with practiced discipline existing frameworks can
+support a SOLID approach.</p>
+
+<p>In this post I will apply the same principles on the server side by showing
+how the Go templating language can be used to support the definition and
+composition of components.</p>
+
+<h3 id="problem-setting">Problem Setting</h3>
+
+<p>Few of the benefits of SOLID design are visible in a trivial system. Many
+critics of SOLID principles claim that the approaches used to implement
+them are over-engineered. That is true of the simple examples used to teach
+SOLID, but not true in the context of an enterprise application with hundreds
+or thousands of classes.</p>
+
+<p>Likewise, SOLID UI components will seem over-engineered if you only look at the
+trivial examples used to teach the practice. However, the correct setting to
+consider is an enterprise which has a UI builder, widgets, and a platform for
+users and vendors to add their own widgets. In that context, reuse and
+maintainability are key features.</p>
+
+<h3 id="components-in-go">Components in Go</h3>
+
+<p><a href="https://golang.org/">The Go programming language</a> has a very powerful built-in
+<a href="https://golang.org/pkg/text/template">template language</a>. It has a
+specialization for HTML generation. This system has been used to create
+extremely fast static web site generators like <a href="https://gohugo.io/">Hugo</a>, used
+to generate this blog. Hugo also has an excellent <a href="https://gohugo.io/templates/overview/">template
+tutorial</a>. If you already know go,
+another good place to learn about the template support for static web sites is
+the blog post by Alex Edwards
+<a href="http://www.alexedwards.net/blog/serving-static-sites-with-go">here</a>.</p>
+
+<p>The closest thing to components in a statically generated web site are the templates
+used to convert data into HTML.</p>
+
+<p>A <strong>component</strong> is a named HTML template with named parameters. These will be
+supplied as keyed values in a <strong>parameter map</strong> at run time. Each of the values
+can itself be a parameter map in order to support passing parameters to nested
+components.</p>
+
+<p>Values can be hard coded in the template, or derived from context that is
+injected into the template.</p>
+
+<p>Component evolution is supported through composition and overrides.</p>
+
+<p>&hellip;</p>
+
+<p>How is this approach SOLID?</p>
+
+<ul>
+<li><p>SRP: The &lsquo;AboutOurTeam&rsquo; view model has a single responsibility. Composition
+and binding allow the templates themselves to remain simple. Here the focus is
+on the headings, message, and the list of team members.</p></li>
+
+<li><p>OCP: Extending a template can be done by means of the [Shadow DOM][shadow],
+another HTML 5 feature. This allows an element&rsquo;s content to be replaced by
+completely encapsulated HTML markup that has access to the original element.</p>
+
+<blockquote>
+<p>Aside. Suppose you created a widget that contained an <code>h2</code>, a <code>p</code> and a text
+<code>input</code> field to allow users to rate the content (the text can be <code>*</code> to <code>*****</code>).
+Now you wanted to replace the input field with a star rater. It is possible to
+shadow the original widget, keeping the <code>h2</code> and <code>p</code> visible while displaying a star
+rater widget whose value feeds the invisible text field.</p>
+</blockquote></li>
+
+<li><p>LSP: Careful delegation to the base of an extended component, as in the above
+example, ensures that the original contract is honored.  The component interacts
+with the user in a different way - its view-facing interface has changed - but it
+will still be plug-in compatible with the original widget component.</p></li>
+
+<li><p>ISP: Models are JavaScript objects. They can be decomposed into arrays, maps,
+or primitive values (string, number, or boolean). Loops decompose arrays. Name
+bindings decompose maps. Finally, primitives can have only a finite set of
+semantic types (e.g. number can represent an integer, decimal, money,
+percentage, distance, time, etc). These few semantic types make it possible to
+support a finite set of primitive interfaces for data binding.</p></li>
+
+<li><p>DIP: The &lsquo;AboutOurTeam&rsquo; view model had a dependency on the <code>profile</code> view model.
+This dependency may resolve to a concrete type (<code>profile.html</code> and <code>profile.js</code> in
+aurelia).  But you can imagine a system where additional logic was involved in
+selecting a view model using additional information about the data instance to be
+bound and also the context.  In particular resolution can take into consideration:</p>
+
+<ul>
+<li>Context in the view</li>
+<li>The type of data being bound (e.g. an extension of <code>profile</code>)</li>
+<li>User based configuration</li>
+</ul></li>
+</ul>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="http://bisondesign.net/" style="background-image: url(/images/bison.png)"><span class="hidden">Andrew Dobrowolski's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://bisondesign.net/">Andrew Dobrowolski</a></h4>
+  
+  <p>Software architect, Lover of mathematics.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Ann Arbor, MI</span>
+    <span class="author-link icon-link"><a href="http://bisondesign.net/">http://bisondesign.net/</a></span>
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Implementing%20SOLID%20UI%20Components%20using%20Go&nbsp;-&nbsp;Bison%20Design&amp;url=http%3a%2f%2fbisondesign.net%2fpost%2fsolid-UI-components-go%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fbisondesign.net%2fpost%2fsolid-UI-components-go%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2fbisondesign.net%2fpost%2fsolid-UI-components-go%2f&amp;description=Implementing%20SOLID%20UI%20Components%20using%20Go"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fbisondesign.net%2fpost%2fsolid-UI-components-go%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'www-bisondesign-net';
+  var disqus_url = 'http:\/\/bisondesign.net\/post\/solid-UI-components-go\/';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+  </footer>
+</article>
+
+</main>
+
+
+  <aside class="read-next">
+  
+      <a class="read-next-story" style="background-image: url(/images/brendan-church-182747.jpg)" href="/post/fast-palindrome-validation/">
+          <section class="post">
+              <h2>A Probabilistic Algorithm for Palindrome Detection</h2>
+              
+          </section>
+      </a>
+  
+  
+      <a class="read-next-story prev" style="background-image: url(/images/jj-thompson-142854.jpg)" href="/post/solid-UI-components/">
+          <section class="post">
+              <h2>SOLID Web UI Components</h2>
+          </section>
+      </a>
+  
+</aside>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Bison Design</a> All rights reserved - 2017</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/prism.js"></script>
+    
+</body>
+</html>
+

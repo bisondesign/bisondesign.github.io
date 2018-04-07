@@ -110,6 +110,25 @@
     
 
     
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, 
+        {
+              delimiters: [
+                  {left: "$$", right: "$$", display: true},
+                  {left: "\\[", right: "\\]", display: true},
+                  {left: "$", right: "$", display: false},
+                  {left: "\\(", right: "\\)", display: false}
+              ]
+          }
+        );
+      });
+    </script>
+
+    
 
 </head>
 <body class="nav-closed">
@@ -204,6 +223,10 @@
     
         
     
+        
+    
+        
+    
 
     
         
@@ -218,11 +241,84 @@
     <div class="extra-pagination inner">
         <nav class="pagination" role="navigation">
 	
-	<span class="page-number">Page 1 of 1</span>
+	<span class="page-number">Page 1 of 2</span>
+	
+	    <a class="older-posts" href="/page/2/">Older Posts &rarr;</a>
 	
 </nav>
 
     </div>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/post/use-case-driven-design-1/">Use-case Driven API Design (part 1)</a></h2>
+    </header>
+    <section class="post-excerpt">
+        
+            <p>Preface Rarely does one get entertained by reading software manuals, though Knuth&rsquo;s The TeXbook is one notable exception. Rarer still is getting pleasure from reading guidelines for writing software. Imagine my surprise when I found myself reading and actually liking Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries by Cwalina and Abrams. The book was seriously fun and educational at the same time. It was hard to put down. <a class="read-more" href="/post/use-case-driven-design-1/">&raquo;</a></p>
+        
+    </section>
+    <footer class="post-meta">
+        
+        
+            
+                <img class="author-thumb" src="/images/bison.png" alt="Author image" nopin="nopin" />
+            
+            
+                Andrew Dobrowolski
+            
+        
+
+        on
+            
+                <a href="http://bisondesign.net/tags/api/">#API</a>,
+            
+                <a href="http://bisondesign.net/tags/design/">#Design</a>,
+            
+        
+        <time class="post-date" datetime="2018-04-07T20:21:11-05:00">
+            7 Apr 2018
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/post/use-case-driven-design-2/">Use-case Driven API Design (part 2)</a></h2>
+    </header>
+    <section class="post-excerpt">
+        
+            <p>Preface In the previous post I talked about the importance of good design when making a published API. I ended by giving four &lsquo;C&rsquo;s of a good API: complete, compact, consistent and clear. Here I elaborate on them one by one.
+Complete An API design is complete if it allows customers to write client code that supports all use cases allowed by the business. This is a dynamic situation. With time the business may change their policy and allow new use cases against the same domain objects. <a class="read-more" href="/post/use-case-driven-design-2/">&raquo;</a></p>
+        
+    </section>
+    <footer class="post-meta">
+        
+        
+            
+                <img class="author-thumb" src="/images/bison.png" alt="Author image" nopin="nopin" />
+            
+            
+                Andrew Dobrowolski
+            
+        
+
+        on
+            
+                <a href="http://bisondesign.net/tags/api/">#API</a>,
+            
+                <a href="http://bisondesign.net/tags/design/">#Design</a>,
+            
+        
+        <time class="post-date" datetime="2018-04-07T20:21:11-05:00">
+            7 Apr 2018
+        </time>
+    </footer>
+</article>
 
     
         
@@ -335,41 +431,12 @@ You run a site where customers create an account with a user name and password. 
 </article>
 
     
-        
-<article class="post post">
-    <header class="post-header">
-        <h2 class="post-title"><a href="/post/bisondesign/">Welcome to Bison Design</a></h2>
-    </header>
-    <section class="post-excerpt">
-        
-            <p>Welcome to the Bison Design blog!
-I believe that crafting software is an art. My training in mathematics and decades of experience developing enterprise software gave me a unique perspective to appreciate software design. The search for simplicity influenced my work and this is the subject of my blog.
-I hope the excitement I feel upon finding that simplicity comes across in a way that is both educational and entertaining. If you find these pages interesting please share your insights in the comments. <a class="read-more" href="/post/bisondesign/">&raquo;</a></p>
-        
-    </section>
-    <footer class="post-meta">
-        
-        
-            
-                <img class="author-thumb" src="/images/bison.png" alt="Author image" nopin="nopin" />
-            
-            
-                Andrew Dobrowolski
-            
-        
-
-        
-        <time class="post-date" datetime="2017-02-06T15:31:02-05:00">
-            6 Feb 2017
-        </time>
-    </footer>
-</article>
-
-    
 
     <nav class="pagination" role="navigation">
 	
-	<span class="page-number">Page 1 of 1</span>
+	<span class="page-number">Page 1 of 2</span>
+	
+	    <a class="older-posts" href="/page/2/">Older Posts &rarr;</a>
 	
 </nav>
 

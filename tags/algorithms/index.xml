@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithms on Bison Design</title>
+    <link>http://bisondesign.net/tags/algorithms/index.xml</link>
+    <description>Recent content in Algorithms on Bison Design</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>All rights reserved - 2017</copyright>
+    <atom:link href="http://bisondesign.net/tags/algorithms/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Use-case Driven API Design (part 1)</title>
+      <link>http://bisondesign.net/post/use-case-driven-design-1/</link>
+      <pubDate>Sat, 07 Apr 2018 20:21:11 -0500</pubDate>
+      
+      <guid>http://bisondesign.net/post/use-case-driven-design-1/</guid>
+      <description>
+
+&lt;h3 id=&#34;preface&#34;&gt;Preface&lt;/h3&gt;
+
+&lt;p&gt;Rarely does one get entertained by reading software manuals, though Knuth&amp;rsquo;s
+&lt;a href=&#34;https://www.amazon.com/TeXbook-Donald-Knuth/dp/0201134489&#34;&gt;The TeXbook&lt;/a&gt; is one
+notable exception. Rarer still is getting pleasure from reading &lt;em&gt;guidelines&lt;/em&gt;
+for writing software. Imagine my surprise when I found myself reading and
+actually liking &lt;a href=&#34;https://www.amazon.com/Framework-Design-Guidelines-Conventions-Libraries/dp/0321545613&#34;&gt;Framework Design Guidelines: Conventions, Idioms, and Patterns
+for Reusable .NET
+Libraries&lt;/a&gt;
+by Cwalina and Abrams. The book was seriously fun and educational at the same
+time. It was hard to put down. One of the general lessons drilled into me from
+that book was the need to paper test an API. The authors stressed the need for
+an API to be usable by design, not by accident. And design takes hard work.&lt;/p&gt;
+
+&lt;p&gt;Inspired by such great authors, my goal for you, gentle reader, is that you
+find this post at least slightly fun and educational. If not, at least I can
+promise that the pain will be short-lived.&lt;/p&gt;
+
+&lt;h3 id=&#34;why-a-published-api-needs-design&#34;&gt;Why a published API needs design?&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;Design thinking&lt;/em&gt; is the name given to the movement that is bringing usability
+and visual design into the earliest stages of a products life-cycle. It applies
+to electronics, web sites, software, and any product that requires human
+interaction. It&amp;rsquo;s methodology includes a deep understanding of the user, the
+problem being solved, and the solution space. It encourages ideation (making a
+lot of crazy ideas for solutions), mixing and matching ideas, and
+experimentation. It is a lot like brainstorming in that regard.&lt;/p&gt;
+
+&lt;p&gt;Well, an API is a product that requires human interaction as well. The &amp;lsquo;P&amp;rsquo; in
+API stands for &amp;lsquo;programming&amp;rsquo;, and at least for the present most of the
+programmers I know are human. Some day if we eliminate programmers we can
+shorten API to AI.&lt;/p&gt;
+
+&lt;p&gt;Why should an API design require any less thought than a visual UI. The target
+audience (programmers) can&amp;rsquo;t be assumed to have any more domain knowledge than
+the user of the UI, and in fact likely has less. We as a profession fall back
+too easily on the assumption that programmers will know what to do and if not
+then QA will find the bugs. Furthermore an API has a long life and if
+successful will have 100&amp;rsquo;s or 1000&amp;rsquo;s of programmers reading it and trying to
+make sense out of it. They will all trip over the same usability issues and
+find the same workarounds. Time invested in making an API usable pays dividends
+over its lifetime and can contribute to its success. To do anything less is a
+cop-out.&lt;/p&gt;
+
+&lt;p&gt;This work specifically targets the design of published APIs for business
+objects. This is a subset of the more general area of API design. A published
+API is intended to be consumed by 3rd parties (either within your enterprise or
+outside of it). Thus the design of the API is more critical since it is hard to
+change. It is also harder to explain. APIs for business objects tend to be
+limited. Business objects have very rigid rules for mutation because the
+business imposes many constraints and invariants on those objects. These
+two factors influence the design of the API as will be seen below.&lt;/p&gt;
+
+&lt;p&gt;So how do we go about making an API for a domain object as usable and
+intuitive as possible, and what does this even mean? Read on!&lt;/p&gt;
+
+&lt;h3 id=&#34;considerations-for-a-good-api-design&#34;&gt;Considerations for a Good API Design&lt;/h3&gt;
+
+&lt;p&gt;An API is a projection of a model. If you have a service that your customers
+want to use they likely have a model of that service in their minds: the type
+of data it provides, what they want to do with and to that data, and so on. If
+your service mimics a traditional process or service then your customers may
+already have a model based on that in their minds.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; &lt;a href=&#34;https://www.shutterfly.com/&#34;&gt;Shutterfly&lt;/a&gt; produces
+and delivers printed photo albums from pictures you supply online. The model I
+have in my mind when I use Shutterfly is based on my past experience of putting
+pictures into an empty photo album I purchased in a department store. I want
+the same flexibility in choosing the style of album, its dimensions, the number
+of pages, laying out my pictures, adding captions, etc. Shutterfly builds on that
+model in their UI and then extends it beyond the original, e.g. zooming in on a
+picture or applying filters. I appreciate these improvements to the traditional
+process. But the reason I find their site easy to use is because they use a
+mental model I am already familiar with.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A business API typically models data, not physical objects like photo albums.
+But that does not mean we are off the hook when it comes to the model&amp;rsquo;s design.
+For example, in an on-line library portal a user must first apply for an
+account (aka library card). The process should be modeled on the paper forms
+that a librarian gave you when you applied for your first a library card in a
+local branch. (I hope you still have your library card.) Of course this form
+differs from the form you filled out to get a driver&amp;rsquo;s license. While these
+forms collect some of the same data they also collect data that is unique to
+each application. A library does not require proof of insurance to issue a card
+and the Department of Motor Vehicles does not care about your literary
+interests. The nomenclature differs as well. To the library you are the
+&lt;em&gt;borrower&lt;/em&gt; whereas to the DMV you are the &lt;em&gt;driver&lt;/em&gt;. One way of putting this is
+to say that data has a &lt;em&gt;shape&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Choosing the right model does matter. It may make the difference between an
+intuitive API and one that is clunky. If the model is not simple and natural
+for the domain, it will be fighting for user mind-share with the &lt;em&gt;true model&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once the model is chosen, the API must be designed to expose &lt;em&gt;commands&lt;/em&gt; and
+&lt;em&gt;queries&lt;/em&gt; against that model. These will again depend on the domain, and they
+&lt;a href=&#34;https://martinfowler.com/bliki/CommandQuerySeparation.html&#34;&gt;should be
+separate&lt;/a&gt;. While
+you may be able to change your address on-line with the library application,
+the DMV will require you to bring proof of your new address in person. At least
+here in Michigan they are not very trusting. This API then becomes the
+&lt;em&gt;projection&lt;/em&gt; of the model. It is not the entire model, but it is the part that
+external developers are allowed to see.&lt;/p&gt;
+
+&lt;p&gt;I propose four considerations, my four &amp;lsquo;C&amp;rsquo;s for a good API design:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Complete&lt;/li&gt;
+&lt;li&gt;Compact&lt;/li&gt;
+&lt;li&gt;Consistent&lt;/li&gt;
+&lt;li&gt;Clear (intuitive)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;rsquo;s elaborate on each of these in turn.&lt;/p&gt;
+
+&lt;h4 id=&#34;complete&#34;&gt;Complete&lt;/h4&gt;
+
+&lt;p&gt;An API design is complete if it allows customers to write client code that
+supports all use cases allowed by the business. This is a dynamic situation.
+WIth time the business may change their policy and allow new use cases against
+the same domain objects. Or it may introduce new domain object types. In either
+case a once complete API may suddenly become incomplete.&lt;/p&gt;
+
+&lt;p&gt;It would be a mistake to anticipate the business and to allow clients to do
+things that are not allowed by the business just in case it is allowed in the
+future. This type of thinking can lead to vulnerabilities and loopholes. In the
+worst case it can even lead to data corruption as business invariants may not
+be protected. For this reason it is best to start with an agreed set of
+business capabilities that can be developed into use cases and the API can be
+designed to support those.&lt;/p&gt;
+
+&lt;p&gt;Adding behavior or new types to a domain should not break existing client code.
+Breaking changes, though rare, can happen and the smart architect is prepared
+for these. For example, a business may initially allow customers to manage
+their own address information with public APIs, but later decide that this
+business capability should no longer be supported. It would be much better for
+this to appear as a deprecation of an API rather than a reduction in the scope
+of a much broader API.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; an API design that allowed the client code to supply a new
+customer info object (e.g. &lt;code&gt;UpdateDriverInfo&lt;/code&gt;) which included among other data
+the customer&amp;rsquo;s address would end up being clunky after the change. And it would
+be harder to change due to the additional business logic and failure modes.
+These would require changes to the documentation as well. While any breaking
+change is hard on client developers, adding failure modes to an existing API
+entails extra work on the part of the client.&lt;/p&gt;
+
+&lt;p&gt;A much better design would be an API that changed only the customer address
+(&lt;code&gt;UpdateDriverAddress&lt;/code&gt;) as this could simply be deprecated in one release and
+eliminated in another. It would also be easier for client developers to see the
+effects of the deprecation.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You may be wondering if the logical continuation of this reasoning is to have
+separate APIs for the customer&amp;rsquo;s street address, city, zip code, etc. Your
+intuition will tell you that this is wrong, but there is also a solid principle
+against such granularity. Go back to the business and ask them: would you ever
+allow the customer to change their city without changing the rest of their
+address? They will tell you that the likelihood of a customer moving from one
+city to another but keeping the same street address is so small that it is
+effectively zero. Some things tend to change together and can be treated as a
+single &amp;ldquo;value&amp;rdquo;. This also leads to a more compact set of APIs, which is our
+second consideration for good API design&lt;/p&gt;
+
+&lt;h4 id=&#34;compact&#34;&gt;Compact&lt;/h4&gt;
+
+&lt;p&gt;There are two divergent schools of thought regarding the design of an API. A
+&lt;strong&gt;humane interface&lt;/strong&gt; provides many convenience methods. It leads to shorter
+client code and a more fluid program structure. A &lt;strong&gt;minimal interface&lt;/strong&gt; is just
+as complete but with a minimum of redundancy. Client code has one clear
+approach that tends to be longer. The first approach leads to larger interfaces
+and the second leads to smaller interfaces.&lt;/p&gt;
+
+&lt;p&gt;When designing a published API, it is good to keep in mind that changes are
+very risky once the API is published. A client may be using the API and
+removing it may cause the client code to break. As a result, API methods are
+often deprecated and not removed (Java 9 removed APIs that had been
+deprecated since Java 2 and the repercussions will last almost as long). For
+this reason it is better to design a &lt;em&gt;minimal interface&lt;/em&gt; and set a very high
+bar for adding convenience methods in future releases.&lt;/p&gt;
+
+&lt;p&gt;In reality risk mitigation through compactness is advice squarely aimed at
+framework and library API sets where business constraints are non-existent or
+negligible (the business has no business changing the definition of a natural
+logarithm). For business objects, whose API are primarily defined by business
+needs and must preserve business invariants, compactness is not as high a
+priority.&lt;/p&gt;
+
+&lt;p&gt;Instead business domain APIs should be first factored along the lines drawn by
+use cases which allow mutation. Business data that is needed to support command
+use cases should be encapsulated within a sub-domain. Then within that
+sub-domain compactness can play a secondary role in the design of the APIs.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; In the library checkout service the business may decide that a
+checkout is allowed only if&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the borrower has less than \$10.00 in fines&lt;/li&gt;
+&lt;li&gt;the borrower has fewer than 25 items out already&lt;/li&gt;
+&lt;li&gt;a copy of the item is not already being held by the borrower&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;An analysis of the use cases would show that the fines are primarily managed by
+another subdomain (library accounts). But the number and particulars of the
+held items belong to the same service that manages checkout. So for this reason
+a single API that returns the collection of all items held by a particular
+borrower would be both compact and appropriate. The same subdomain would also
+expose an API that allows a new item to be added the list (&lt;code&gt;BorrowItem&lt;/code&gt;).
+Adding an item would be accomplished transactionally, so that two checkouts
+done at the same time from different clients would not both succeed if they
+would put that borrower over the 25 item limit or if they both attempted to add
+the same item.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;consistent&#34;&gt;Consistent&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Naming.&lt;/li&gt;
+&lt;li&gt;Uniformity of behavior.&lt;/li&gt;
+&lt;li&gt;Error handling.&lt;/li&gt;
+&lt;li&gt;Event publishing.&lt;/li&gt;
+&lt;li&gt;Documentation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;clear-aka-intuitive&#34;&gt;Clear (aka Intuitive)&lt;/h4&gt;
+
+&lt;p&gt;Closely related to paper testing.
+Proportional to how close your solution is to the true model.
+Warning not to overestimate your own intuition (confirmation bias).&lt;/p&gt;
+
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;In the next post in this series I will delve into the design process,
+continuing to use the on-line library service example.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Use-case Driven API Design (part 2)</title>
+      <link>http://bisondesign.net/post/use-case-driven-design-2/</link>
+      <pubDate>Sat, 07 Apr 2018 20:21:11 -0500</pubDate>
+      
+      <guid>http://bisondesign.net/post/use-case-driven-design-2/</guid>
+      <description>
+
+&lt;h3 id=&#34;use-case-driven-api-design&#34;&gt;Use-case Driven API Design&lt;/h3&gt;
+
+&lt;p&gt;Knowing where we want to go does not automatically tell us how to get there.
+Today I wanted to travel from Detroit to Chicago so I got in the car and opened &lt;a href=&#34;https://www.google.com/maps/dir/Detroit,+Michigan/Chicago,+Illinois&#34;&gt;Google
+Maps&lt;/a&gt; on
+my phone. But before 1800 Chicago was much harder to find; there were no roads,
+no maps, no directions. Often it feels that way when we embark on the design of
+an API that does not yet exist. We are blazing a trail into new territory. We
+know the end goal - a clear, complete, compact, consistent API - and we can
+recognize it when we see it. But where do we start? We start from the end of
+course!&lt;/p&gt;
+
+&lt;p&gt;Requirements for an API must begin as a collection of tasks that the consumers
+of the API will accomplish. These should be written down in the language of the
+domain. If the person responsible for these requirements is not a subject
+matter expert (SME) then one should be retained and consulted. Getting the
+language right is crucial at this stage. The language will contain nouns and
+verbs that should become part of the final API methods. If you are using
+Domain Driven Design (DDD) it will also appear in the implementation.&lt;/p&gt;
+
+&lt;h4 id=&#34;nomenclature-aka-ubiquitous-language&#34;&gt;Nomenclature (aka Ubiquitous Language)&lt;/h4&gt;
+
+&lt;p&gt;Ubiquitous language is simply the language of a particular domain. Your API
+should be built on that language. Your object domain model should only include
+those domain concepts, the same ones understood and used by users and subject
+matter experts. It should not contain concepts related to the technical
+implementation of your computing solution.&lt;/p&gt;
+
+&lt;p&gt;For example, a flight reservation model would include nouns like person,
+passenger, reservation, scheduled flight, flight description, and airport. It
+would also include verbs or verb phrases like add reservation, add passenger,
+check space, add scheduled flight, and add airport.&lt;/p&gt;
+
+&lt;p&gt;These terms should be well documented. It is important to understand that the
+scope of a language can be fairly narrow. To an enterprise like a telephone
+company the term telephone will mean different things in different contexts
+(e.g. repair vs billing vs routing). Each domain will have its own dictionary.&lt;/p&gt;
+
+&lt;h4 id=&#34;queries&#34;&gt;Queries&lt;/h4&gt;
+
+&lt;p&gt;The term &amp;lsquo;command query separation&amp;rsquo; (or CQS) was coined by Bertrand Meyer in
+his influential book &lt;a href=&#34;https://www.amazon.com/Object-Oriented-Software-Construction-Prentice-Hall-International&#34;&gt;Object-Oriented Software Construction&lt;/a&gt; It states that
+every method should either be a command that performs an action, or a query
+that returns data to the caller, but not both. Methods that return data should
+have no observable side effects (except perhaps drowsiness).&lt;/p&gt;
+
+&lt;p&gt;While adherence to CQS is not necessary for a good API design, it is helpful to
+keep these two types of API separate since they present different challenges to
+scalability. For example, in a distributed system the results of queries can be
+cached when performance is poor at the cost of some staleness. On the other
+hand, commands need special handling to avoid race conditions that might lead
+to data corruption.&lt;/p&gt;
+
+&lt;p&gt;When handling queries it is first helpful to rule out &amp;ldquo;reports&amp;rdquo;. Like queries,
+reports return data to the caller typically by getting some information from
+many database tables and doing some joins. The business is usually pretty lax
+about report requirements depending on how they are used. A report may be
+generated only for compliance and archived. Or it may be used to look for
+anomalies in a historical record of transactions. Typically reports span a
+fixed period of time. Most importantly, reports rarely have anything to do with
+the domain model of the system. It is this that allows us to ignore reports
+when designing an API for the domain.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, data that is presented to the user in a user interface is
+usually intended for immediate action. It can represent the current status of
+the domain. This information has higher standards of &amp;ldquo;freshness&amp;rdquo;. Once again
+the business should be willing to provide guidance on how stale a piece of data
+can be allowed to get.&lt;/p&gt;
+
+&lt;p&gt;The result of a query should be some data. It is very useful to include an
+indication of the staleness of that data as well for display to the end user
+(e.g. &amp;ldquo;as of 10:25:20 on 02/13/18&amp;rdquo;).&lt;/p&gt;
+
+&lt;p&gt;The key design consideration for a query is that all the data in the result
+should come from one subdomain. If the query must aggregate information from
+other subdomains then it will be slow and inconsistent. This may lead to some
+surprising results.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; library domain&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;commands&#34;&gt;Commands&lt;/h4&gt;
+
+&lt;h4 id=&#34;example-in-the-library-domain&#34;&gt;Example in the Library Domain&lt;/h4&gt;
+
+&lt;h3 id=&#34;testing-an-api&#34;&gt;Testing an API&lt;/h3&gt;
+
+&lt;p&gt;A lean API with just the essential complexity is ideal. Your API design will be
+measured against these three criteria:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Sufficiency for the use cases for which it is intended&lt;/li&gt;
+&lt;li&gt;Simplicity of use for client developers&lt;/li&gt;
+&lt;li&gt;Consistency across the platform or enterprise&lt;/li&gt;
+&lt;li&gt;Intuitive semantics for domain experts&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;application-to-rest-api-design&#34;&gt;Application to REST API Design&lt;/h3&gt;
+
+&lt;p&gt;A programmer walks into a bar and orders an API. The bartended looks at him and
+says &amp;ldquo;404: resource not found&amp;rdquo;. If you got that congratulations. You are likely
+familiar with REST (and beer).&lt;/p&gt;
+
+&lt;p&gt;An API should be modeled to solve a particular problem for the API consumer. It
+is not merely a mechanical reflection of the objects and methods of an existing
+process. APIs copied mechanically from an implementation are harder to consume
+and ultimately more fragile than ones that are modeled for utility. Resources
+that you expose will have a name (URI) and possibly a representation. Deciding
+which business concepts to drop, which to expose as resources, and what to
+include in their representations must all be done deliberately. Resource
+over-exposure is bad for many reasons:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;More surface area that is vulnerable to attacks&lt;/li&gt;
+&lt;li&gt;More coupling, making subsequent code change increasingly difficult&lt;/li&gt;
+&lt;li&gt;More contract, leading to a greater maintenance burden on development&lt;/li&gt;
+&lt;li&gt;More confusion for customers faced with many similar options&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;examples-of-a-good-api&#34;&gt;Examples of a Good API&lt;/h3&gt;
+
+&lt;h3 id=&#34;final-thoughts&#34;&gt;Final Thoughts&lt;/h3&gt;
+
+&lt;p&gt;Thanks for sticking it through. You may not agree with half of what I said
+here. That&amp;rsquo;s OK. These are guidelines meant to be tested by you, a professional
+programmer, in the context of your own situation and then accepted if you see
+any benefit or rejected if you do not. I know I have written better APIs as a
+result of following them.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;d like to close with two quotes from two great men.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Professionals use their powers for good and write code that others can understand&lt;/em&gt; - &lt;a href=&#34;https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/&#34;&gt;Uncle Bob&lt;/a&gt;
+&lt;!-- --&gt;
+&lt;em&gt;With great power comes great responsibility&lt;/em&gt; — &lt;a href=&#34;https://en.wikipedia.org/wiki/Uncle_Ben&#34;&gt;Uncle Ben&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-mermaid&#34;&gt;sequenceDiagram
+
+participant c as Client
+participant cache 
+participant s as Server
+
+c -&amp;gt;&amp;gt; s: POST http://www.ptc.com/shopping/carts
+s -&amp;gt;&amp;gt; c: 201 Created
+note over c, s: Location http://www.ptc.com/shopping/carts(123)
+
+c -&amp;gt;&amp;gt; s: GET http://www.ptc.com/shopping/carts(123)
+s -&amp;gt;&amp;gt; c: 200 OK
+note over c, s: Returned representation contains a link in the body:&amp;lt;/br&amp;gt;    {&amp;lt;/br&amp;gt;        &amp;quot;rel&amp;quot;: &amp;quot;items&amp;quot;,&amp;lt;/br&amp;gt;        &amp;quot;href&amp;quot;: &amp;quot;http://www.ptc.com/shopping/carts(123)/items&amp;quot;&amp;lt;/br&amp;gt;    }
+
+c -&amp;gt;&amp;gt; s: GET http://www.ptc.com/shopping/carts(123)/items
+s -&amp;gt;&amp;gt; c: 200 OK
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A Probabilistic Algorithm for Palindrome Detection</title>
+      <link>http://bisondesign.net/post/fast-palindrome-validation/</link>
+      <pubDate>Sat, 07 Oct 2017 20:21:11 -0500</pubDate>
+      
+      <guid>http://bisondesign.net/post/fast-palindrome-validation/</guid>
+      <description>
+
+&lt;h3 id=&#34;abstract&#34;&gt;Abstract&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This paper describes a probabilistic approach to detecting if a sequence is a
+    palindrome. The approach is simple yet efficient, having O(N) performance and
+    O(1) memory overhead, suitable for real-time applications. The chance of a
+    false negative is zero, while the chance of a false positive is less than $1$ in
+    $10^{19}$. Below we describe the algorithm, its motivation, and prove
+    the correctness of the results.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+
+&lt;p&gt;A palindrome is string that reads the same forwards as backwards. More
+formally, given a finite alphabet $\Omega$ and a sequence $S={s_1, s_2,&amp;hellip;s_n}$
+where $s_i \in \Omega$ for all $i \leq n$ we call
+$S^\prime={s_n,s_{n-1}&amp;hellip;, s_1}$ the inverse of $S$.&lt;/p&gt;
+
+&lt;p&gt;Existing exact algorithms determine if a sequence is a palindrome by doing a
+item by item comparison of the sequence and its reverse. This in turn requires
+either keeping the sequence in memory or the ability to traverse the sequence
+in both directions simultaneously. When extra memory is prohibitive because of
+the size of the sequence and if the option to traverse the sequence in two
+directions does not exist (e.g. with a feed), other approaches are necessary.&lt;/p&gt;
+
+&lt;h3 id=&#34;theory&#34;&gt;Theory&lt;/h3&gt;
+
+&lt;p&gt;This paper describes a probabilistic approach implemented by calculating two
+hash values for the sequence as it is being traversed. These hash values have
+the special property that their product can be used to determine with certainty
+that the generating sequence is not a palindrome. The same product can also
+determine with very high probability if the sequence is a palindrome.
+Algorithms with a bounded probability of error are called probabilistic
+algorithms.&lt;/p&gt;
+
+&lt;p&gt;Our hash values must be members of a non-commutative group, for reasons that
+will soon be clear. We chose to use ${\mathbb Z}^{2\times2}$, the group of
+$2\times 2$ integer matrices. Members of our alphabet must map to distinct
+members of this group. We assume $\Omega$ is ordered and that each member has a
+distinct ordinal value denoted $a =\mathrm{ord}(s)$ where $a\in\mathbb{Z}^+$.&lt;/p&gt;
+
+&lt;p&gt;We define an injection
+$f:\Omega\mapsto{\mathbb Z}^{2\times2}$ as follows:&lt;/p&gt;
+
+&lt;p&gt;$$f(s) = \left[\begin{matrix}
+1 &amp;amp; \mathrm{ord}(s)\cr
+p &amp;amp; 1
+\end{matrix}\right] = \left[\begin{matrix}
+1 &amp;amp; a\cr
+p &amp;amp; 1
+\end{matrix}\right]$$&lt;/p&gt;
+
+&lt;p&gt;where $p$ represents a large fixed prime. The determinant of $f(s)$ is $1-ap$,
+which is never zero over $\mathbb{Z}$, so every such matrix has an inverse.
+From now on, without loss of generality, we will assume that the alphabet
+$\Omega=\mathbb{Z}^+$.&lt;/p&gt;
+
+&lt;p&gt;If $A_i = f(s_i)$ then the two hash values for string $S$ will be denoted
+$h(S)$ and $h^\prime(S)$ and will be defined as follows:&lt;/p&gt;
+
+&lt;p&gt;$$ h(S) = \prod_{i=1}^n A_i \qquad h^\prime(S) = \prod_{i=1}^n A_i^{-1} $$&lt;/p&gt;
+
+&lt;p&gt;The implementation computes these product matrices as the sequence ${s_i}$ is
+consumed. We will show that if the product $h(S)\cdot h^\prime(S)$ is the identity
+matrix $\bf1$ then $S$ is a palindrome or a very rare condition occurred. If
+the multiplication operation were commutative the product of $h(S)$ and $h^\prime(S)$
+would always be the identity and a different approach would have been needed.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem 1.&lt;/strong&gt; If $S$ is a palindrome, then $h(S)\cdot h^\prime(S)=\bf1$.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Proof.&lt;/strong&gt; We will expand the multiplication and take advantage of the
+associativity of matrix multiplication to reduce the product. We also use the
+fact that since $S$ is a palindrome, $A_i=A_{n-i+1}$.&lt;/p&gt;
+
+&lt;p&gt;$$
+\begin{aligned}
+    h(S)\cdot h^\prime(S)
+    &amp;amp;= \prod_{i=1}^n A&lt;em&gt;i \cdot \prod&lt;/em&gt;{i=1}^n A_i^{-1} &lt;br /&gt;
+    &amp;amp;= \left(A_1 A&lt;em&gt;2\cdots A&lt;/em&gt;{n-1}A_n \right)\cdot \left(A_1^{-1} A_2^{-1}\cdots A_n^{-1}\right) &lt;br /&gt;
+    &amp;amp;= \left(A_1 A_2\cdots A_2 A_1 \right)\cdot \left(A_1^{-1} A_2^{-1}\cdots A_2^{-1}A_1^{-1}\right) &lt;br /&gt;
+    &amp;amp;= \left(A_1 A_2\cdots A_2 \right)\left(A_1 \cdot A_1^{-1}\right)\left( A_2^{-1}\cdots A_2^{-1}A_1^{-1}\right) &lt;br /&gt;
+    &amp;amp;= \left(A_1 A_2\cdots A_2 \right)\cdot{\bf1}\cdot \left(A_2^{-1}\cdots A_2^{-1}A_1^{-1}\right) &lt;br /&gt;
+    &amp;amp;= \left(A_1 A_2\cdots A_2 \right)\cdot\left(A_2^{-1}\cdots A_2^{-1}A_1^{-1}\right) &lt;br /&gt;
+    &amp;amp;= \cdots = {\bf1}
+\end{aligned}
+$$&lt;/p&gt;
+
+&lt;p&gt;This completes the proof. $\Box$&lt;/p&gt;
+
+&lt;p&gt;The proof holds in the domain $\mathbb{Z}$ because an inverse exists for all
+$A_i$. In practice the computations will take place with 64 bit integers. We
+would like to extend the proof to the quotient ring of integers modulo m
+denoted $\mathbb{Z}/m\mathbb{Z}$ where $m=2^{64}$. In this ring not every
+$A_i$ has an inverse. The determinant of $A_i$ is zero when $pa_i=1 (mod m)$. By the
+extended Euclidean algorithm the inverse of p exists modulo m if and only if
+$\gcd(p,m)=1$. Since $m=2^{64}$ and p is prime p has a unique inverse, denoted
+by $p^{-1}$.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem 2.&lt;/strong&gt; If $S$ is a palindrome, then $h(S)\cdot h^\prime(S)=\bf1$ when matrix
+multiplication is done modulo m, so long as $a_i \neq p^{-1}$ for any $i$.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Proof.&lt;/strong&gt; Matrix multiplication, even under modulo arithmetic, is still
+associative. The proof is elementary and uses the congruence sum rule and congruence
+product rule to show that
+$(AB)C=A(BC) \pmod m$ for all $A,B,C\in{\mathbb Z}^{n\times n}$.
+We note that the inner multiplication of expression above still holds using
+modulo arithmetic:&lt;/p&gt;
+
+&lt;p&gt;$$\begin{aligned}
+A_1 \cdot A_1^{-1}
+  &amp;amp;= \left[\begin{matrix}1 &amp;amp; a_1 \cr p &amp;amp; 1 \end{matrix}\right]
+     \left[\begin{matrix}1 &amp;amp; -a_1\cr -p &amp;amp; 1 \end{matrix}\right]
+     \cdot{1\over 1-pa_i} &lt;br /&gt;
+  &amp;amp;= \left[\begin{matrix}(1-pa_i) \pmod m &amp;amp; 0 \cr 0 &amp;amp; (1-pa_i) \pmod m\end{matrix}
+        \right]\cdot{1\over (1-pa_i) \pmod m} &lt;br /&gt;
+  &amp;amp;= {\bf1}
+  \end{aligned}
+$$&lt;/p&gt;
+
+&lt;p&gt;since $pa_i\neq1$. Working from the inside of the expression out, all pairs
+again result in the identity. So the proof above still holds under modulo
+arithmetic. $\Box$&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem 3.&lt;/strong&gt; If $h(S)\cdot h^\prime(S)=\bf1$ then $S$ is a palindrome.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Proof.&lt;/strong&gt; Let $H(S) = h(S)h^\prime(S)$. $|H(S)|=1$ since $|AB|=|A|\cdot|B|$ and
+$|A^{-1}|=1/|A|$. The values of $H(S)$ range over ${\mathbb Q}^{2\times2}$ with
+three degrees of freedom. Only one of these values is the identity matrix. The
+likelihood of a random sequence $S$ producing $|H(S)|=1$ is intuitively zero.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I am stuck here. I can argue statistically since the function $H(S)$
+has some properties of a hash function. I can demonstrate this empirically
+with tests - but those would be done using modulo arithmetic.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem 4.&lt;/strong&gt; If $h(S)\cdot h^\prime(S)=\bf1$ when matrix multiplication is done
+modulo m, then $S$ is a palindrome with a statistically small chance of error.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Proof.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I am stuck here too. This should follow from Theorem 3, however, because the
+range collapses to a finite range under modulo multiplication there is a
+greater chance that distinct non-palindromic inputs will collide with the
+identity.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;implementation&#34;&gt;Implementation&lt;/h3&gt;
+
+&lt;p&gt;The implementation of the algorithm closely follows the description above using
+64 bit signed integers. Signed integers using two&amp;rsquo;s complement representation
+are unsigned 64 bit integers with the upper half of the range shifted to
+represent the negatives making the arguments from modulo arithmetic valid.
+The code syntax in this section uses the language &amp;ldquo;go&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;The hash matrix values are computed iteratively on a stream of entries of the
+sequence $S$. The structure &lt;code&gt;hash&lt;/code&gt; consists of three values:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type hash struct {
+    p   Matrix // running product of the A_i matrices
+    q   Matrix // running product of the A_i inverses (scaled by det)
+    det int64  // running product of the A_i determinant values
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;Matrix&lt;/code&gt; is a basic implementation of ${\mathbb Z}^{2\times2}$ supporting the
+operations &lt;code&gt;Times&lt;/code&gt;, &lt;code&gt;Inverse&lt;/code&gt;, and &lt;code&gt;Det&lt;/code&gt;. Multiplying the inverse of $A_i$ by the
+determinant allows us to avoid floating point arithmetic and is the reason why
+the determinant must be stored separately. The initial value of this structure
+uses 1 for the determinant and the identity for the two matrix values:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-golang&#34;&gt;one := Matrix{1, 0, 0, 1}
+
+func NewHash() *hash {
+    return &amp;amp;hash{one, one, 1}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The mapping $f(a)$ makes use of a hash prime. In our implementation we use
+P=1099511628211. The inverse of P is -3560570117845248645, making this an
+illegal value for an element of $S$. Since $S$ only contains positive ordinal
+values, this restriction is not checked when a new &lt;code&gt;int64&lt;/code&gt; is added to the
+hash.&lt;/p&gt;
+
+&lt;p&gt;Adding an item from the sequence to hash &lt;code&gt;h&lt;/code&gt; requires mapping the item to a
+matrix and multiplying this matrix and its scaled inverse into the appropriate
+fields of the hash.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-golang&#34;&gt;P := 1099511628211
+
+func (h *hash) Add(r int64) {
+    m := Matrix{1, r, P, 1}
+    mInv := Matrix{1, -r, -P, 1}
+
+    h.p = h.p.Times(m)
+    h.q = h.q.Times(mInv)
+    h.det = h.det * m.Det()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The methods &lt;code&gt;Times&lt;/code&gt; and &lt;code&gt;Det&lt;/code&gt; have the usual definitions for matrix
+multiplication and determinant, and are not shown here. The test for a
+palindrome is also straightforward:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-golang&#34;&gt;func (h *hash) IsPalindrome() bool {
+    temp := h.p.Times(h.q)
+    return temp == one.Scale(h.det)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If the product of the two matrix values &lt;code&gt;p&lt;/code&gt; and &lt;code&gt;q&lt;/code&gt; is equal to the identity
+matrix scaled by the determinant, then the sequence is likely a palindrome.&lt;/p&gt;
+
+&lt;h3 id=&#34;limitations&#34;&gt;Limitations&lt;/h3&gt;
+
+&lt;p&gt;The starting point of the palindrome detection is fixed. As a consequence this
+approach cannot be used to find the longest palindrome embedded in a stream. It
+can be used to detect the moment at which a stream becomes palindromic (running
+detection). For example, the following stream of letters becomes palindromic at
+points marked with a ^.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ABBABCCBABBAABBABCCBABBABC...
+---^-------^-----------^--...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;The author believes the algorithm presented here is a novel approach. It might
+have some applications in fields where detecting symmetry is important but the
+data set is very large, such as genetics.&lt;/p&gt;
+
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Z. Galil, “Real-time algorithms for string-matching and palindrome recognition,”
+8th Ann. ACM Symp. Theory Comput., Hershey, Pensylvania, May, 1976, pp. 161–173.&lt;/li&gt;
+&lt;li&gt;Z. Galil, &amp;ldquo;Two fast simulations which imply some fast string matching and
+palindrome-recognition algorithms,&amp;rdquo; Information Processing Letters, Volume 4,
+Issue 4, Pages 85-87 &lt;a href=&#34;http://www.sciencedirect.com/science/article/pii/0020019076900508&#34;&gt;http://www.sciencedirect.com/science/article/pii/0020019076900508&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Slisenko, A.O., &amp;ldquo;A simplified proof of the real-time recognizability of palindromes
+on turing machines,&amp;rdquo; J&amp;nbsp;Math Sci (1981) 15: 68. &lt;a href=&#34;https://doi.org/10.1007/BF01404109&#34;&gt;https://doi.org/10.1007/BF01404109&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Manacher, Glenn (1975), &amp;ldquo;A new linear-time &amp;ldquo;on-line&amp;rdquo; algorithm for finding the
+smallest initial palindrome of a string&amp;rdquo;, Journal of the ACM, 22 (3): 346–351,
+doi:10.&lt;sup&gt;1145&lt;/sup&gt;&amp;frasl;&lt;sub&gt;321892&lt;/sub&gt;.321896.&lt;/li&gt;
+&lt;li&gt;Wikipedia, &lt;a href=&#34;https://en.wikipedia.org/wiki/Palindromic_sequence&#34;&gt;https://en.wikipedia.org/wiki/Palindromic_sequence&lt;/a&gt; (Genetics)&lt;/li&gt;
+&lt;li&gt;1968: Ian D. Macdonald: The Theory of Groups&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/ref/spec&#34;&gt;https://golang.org/ref/spec&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;[](&lt;a href=&#34;https://slideblast.com/tight-tradeoffs-for-approximating-palindromes-in-streams_5956c7671723dd84eb3600e6.html&#34;&gt;https://slideblast.com/tight-tradeoffs-for-approximating-palindromes-in-streams_5956c7671723dd84eb3600e6.html&lt;/a&gt;)&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

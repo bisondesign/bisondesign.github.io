@@ -7,8 +7,273 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2017</copyright>
-    <lastBuildDate>Wed, 07 Jun 2017 20:21:11 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 07 Apr 2018 20:21:11 -0500</lastBuildDate>
     <atom:link href="http://bisondesign.net/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Use-case Driven API Design (part 1)</title>
+      <link>http://bisondesign.net/post/use-case-driven-design-1/</link>
+      <pubDate>Sat, 07 Apr 2018 20:21:11 -0500</pubDate>
+      
+      <guid>http://bisondesign.net/post/use-case-driven-design-1/</guid>
+      <description>
+
+&lt;h3 id=&#34;preface&#34;&gt;Preface&lt;/h3&gt;
+
+&lt;p&gt;Rarely does one get entertained by reading software manuals, though Knuth&amp;rsquo;s
+&lt;a href=&#34;https://www.amazon.com/TeXbook-Donald-Knuth/dp/0201134489&#34;&gt;The TeXbook&lt;/a&gt; is one notable exception. Rarer still is getting pleasure from
+reading &lt;em&gt;guidelines&lt;/em&gt; for writing software. Imagine my surprise when I found
+myself reading and actually liking &lt;a href=&#34;https://www.amazon.com/Framework-Design-Guidelines-Conventions-Libraries/dp/0321545613&#34;&gt;Framework Design Guidelines: Conventions,
+Idioms, and Patterns for Reusable .NET Libraries&lt;/a&gt; by Cwalina and Abrams. The
+book was seriously fun and educational at the same time. It was hard to put
+down. One of the general lessons drilled into me from that book was the need to
+paper test an API. The authors stressed the need for an API to be usable by
+design, not by accident. And design takes hard work.&lt;/p&gt;
+
+&lt;p&gt;This is my first post is about API design - a mysterious mixture of art and
+science - about which I am passionate. Inspired by such great authors, my goal
+for you, dear reader, is that you find this post fun and educational. If not,
+at least I can promise that the pain will be short-lived.&lt;/p&gt;
+
+&lt;h3 id=&#34;why-a-published-api-needs-design&#34;&gt;Why a published API needs design&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;Design thinking&lt;/em&gt; is the name given to the movement that is bringing usability
+and visual design into the earliest stages of a products life-cycle. It applies
+to electronics, web sites, software, and any product that requires human
+interaction. It&amp;rsquo;s methodology includes a deep understanding of the user, the
+problem being solved, and the solution space. It encourages ideation (making a
+lot of crazy ideas for solutions), mixing and matching ideas, and
+experimentation. It is a lot like brainstorming in that regard.&lt;/p&gt;
+
+&lt;p&gt;Well, an API is a product that requires human interaction as well. The &amp;lsquo;P&amp;rsquo; in
+API stands for &amp;lsquo;programming&amp;rsquo;, and at least for the present most of the
+programmers I know are human. Some day if we eliminate programmers we can
+shorten API to AI.&lt;/p&gt;
+
+&lt;p&gt;Why should an API design require any less thought than a visual UI? The target
+audience (we programmers) can&amp;rsquo;t be assumed to have any more domain knowledge
+than the user of the UI, and in fact we likely have less. As a profession we
+fall back too easily on the assumption that programmers will know what to do.
+We also assume that if the programmers make a mistake then QA will find the
+bugs.&lt;/p&gt;
+
+&lt;p&gt;Another strong argument for careful design is that an API has a long life and
+if successful will be read many more times than it was written. You might have
+100&amp;rsquo;s or 1000&amp;rsquo;s of programmers reading your API and trying to make sense out of
+it. They will all trip over the same usability issues and find the different
+workarounds. Time invested in making an API usable pays dividends over its
+lifetime and can contribute to its success.&lt;/p&gt;
+
+&lt;p&gt;This post specifically targets the design of the published APIs for business
+objects. This is a subset of the more general area of API design. A published
+API is intended to be consumed by 3rd parties (either within your enterprise or
+outside of it). Thus the design of the API is more critical since it is hard to
+change. It is also harder to explain. APIs for business objects tend to be
+limited. Business objects have very rigid rules for mutation because the
+business imposes many constraints and invariants on those objects. These
+two factors influence the design of the API as will be seen below.&lt;/p&gt;
+
+&lt;p&gt;So how do we go about making an API for a domain object as usable and
+intuitive as possible, and what does this even mean? Read on!&lt;/p&gt;
+
+&lt;h3 id=&#34;considerations-for-a-good-api-design&#34;&gt;Considerations for a Good API Design&lt;/h3&gt;
+
+&lt;p&gt;An API is a projection of a model. If you have a service that your customers
+want to use they likely have a model of that service in their minds: the type
+of data it provides, what they want to do with and to that data, and so on. If
+your service mimics a traditional process or service then your customers may
+already have a model based on that in their minds.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; &lt;a href=&#34;https://www.shutterfly.com/&#34;&gt;Shutterfly&lt;/a&gt; produces
+and delivers printed photo albums from pictures you supply online. The model I
+have in my mind when I use Shutterfly is based on my past experience of putting
+pictures into an empty photo album I purchased in a department store. I want
+the same flexibility in choosing the style of album, its dimensions, the number
+of pages, laying out my pictures, adding captions, etc. Shutterfly builds on that
+model in their UI and then extends it beyond the original, e.g. zooming in on a
+picture or applying filters. I appreciate these improvements to the traditional
+process. But the reason I find their site easy to use is because they use a
+mental model I am already familiar with.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A business API typically models data, not physical objects like photo albums.
+But that does not mean we are off the hook when it comes to the model&amp;rsquo;s design.
+For example, in an on-line library portal a user must first apply for an
+account (aka library card). The process should be modeled on the paper forms
+that a librarian gave you when you applied for your first a library card in a
+local branch. (I hope you still have your library card.) Of course this form
+differs from the form you filled out to get a driver&amp;rsquo;s license. While these
+forms collect some of the same data they also collect data that is unique to
+each application. A library does not require proof of insurance to issue a card
+and the Department of Motor Vehicles does not care about your literary
+interests. The nomenclature differs as well. To the library you are the
+&lt;em&gt;borrower&lt;/em&gt; whereas to the DMV you are the &lt;em&gt;driver&lt;/em&gt;. One way of putting this is
+to say that data has a &lt;em&gt;shape&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Choosing the right model does matter. It may make the difference between an
+intuitive API and one that is clunky. If the model is not simple and natural
+for the domain, it will be fighting for user mind-share with the &lt;em&gt;true model&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once the model is chosen, the API must be designed to expose &lt;em&gt;commands&lt;/em&gt; and
+&lt;em&gt;queries&lt;/em&gt; against that model. These will again depend on the domain, and they
+&lt;a href=&#34;https://martinfowler.com/bliki/CommandQuerySeparation.html&#34;&gt;should be separate&lt;/a&gt;. While you may be able to change your address on-line
+with the library application, the DMV will require you to bring proof of your
+new address in person. At least here in Michigan they are not very trusting.
+This API then becomes the &lt;em&gt;projection&lt;/em&gt; of the model. It is not the entire
+model, but it is the part that external developers are allowed to see.&lt;/p&gt;
+
+&lt;p&gt;I propose four considerations, my four &amp;lsquo;C&amp;rsquo;s for a good API design:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Complete&lt;/li&gt;
+&lt;li&gt;Compact&lt;/li&gt;
+&lt;li&gt;Consistent&lt;/li&gt;
+&lt;li&gt;Clear (intuitive)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In the &lt;a href=&#34;../use-case-driven-design-2/&#34;&gt;second post&lt;/a&gt; of this series I will elaborate on each of these in turn.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Use-case Driven API Design (part 2)</title>
+      <link>http://bisondesign.net/post/use-case-driven-design-2/</link>
+      <pubDate>Sat, 07 Apr 2018 20:21:11 -0500</pubDate>
+      
+      <guid>http://bisondesign.net/post/use-case-driven-design-2/</guid>
+      <description>
+
+&lt;h3 id=&#34;preface&#34;&gt;Preface&lt;/h3&gt;
+
+&lt;p&gt;In the &lt;a href=&#34;../use-case-driven-design-1/&#34;&gt;previous post&lt;/a&gt; I talked about the importance of good design when
+making a published API. I ended by giving four &amp;lsquo;C&amp;rsquo;s of a good API: complete,
+compact, consistent and clear. Here I elaborate on them one by one.&lt;/p&gt;
+
+&lt;h4 id=&#34;complete&#34;&gt;Complete&lt;/h4&gt;
+
+&lt;p&gt;An API design is complete if it allows customers to write client code that
+supports all use cases allowed by the business. This is a dynamic situation.
+With time the business may change their policy and allow new use cases against
+the same domain objects. Or it may introduce new domain object types. In either
+case a once complete API may suddenly become incomplete.&lt;/p&gt;
+
+&lt;p&gt;It would be a mistake to anticipate the business and to allow clients to do
+things that are not allowed by the business just in case it is allowed in the
+future. This type of thinking can lead to vulnerabilities and loopholes. In the
+worst case it can even lead to data corruption as business invariants may not
+be protected. For this reason it is best to start with an agreed set of
+business capabilities that can be developed into use cases and the API can be
+designed to support those.&lt;/p&gt;
+
+&lt;p&gt;Adding behavior or new types to a domain should not break existing client code.
+Breaking changes, though rare, can happen and the smart architect is prepared
+for these.  This can be demonstrated with a concrete example.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; The Department of Motor Vehicles API may initially allow customers
+to manage their home address information with public APIs, but later decide that
+this business capability should no longer be supported. It would be much better
+for this to appear as a deprecation of an API rather than a reduction in the
+scope of a much broader API.&lt;/p&gt;
+
+&lt;p&gt;Now if the initial design had allowed the client code to supply a new customer
+info object (&lt;code&gt;UpdateDriverInfo&lt;/code&gt; which included the customer&amp;rsquo;s address), this
+API would end up being clunky after the business change. The implementation
+would require new business logic (did the address change?) and failure modes.
+These changes would trigger changes to the documentation as well. While any
+breaking change is hard on client developers, adding failure modes to an
+existing API is worse since it entails extra work on the part of the client.&lt;/p&gt;
+
+&lt;p&gt;A much better initial design would be an API that changed only the customer
+address (&lt;code&gt;UpdateDriverAddress&lt;/code&gt;) as this could simply be deprecated in one
+release and eliminated in another. It would also be easier for client
+developers to see the effects of the deprecation.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You may be wondering if the logical continuation of this reasoning is to have
+separate APIs for the customer&amp;rsquo;s street address, city, zip code, etc. Your
+intuition will tell you that this is wrong, but there is also a solid principle
+against such granularity. Go back to the business and ask them: would you ever
+allow the customer to change their city without changing the rest of their
+address? They will tell you that the likelihood of a customer moving from one
+city to another but keeping the same street address is so small that it is
+effectively zero. Some things tend to change together and can be treated as a
+single &amp;ldquo;value&amp;rdquo;. This also leads to a more compact set of APIs, which leads to
+our second consideration for good API design.&lt;/p&gt;
+
+&lt;h4 id=&#34;compact&#34;&gt;Compact&lt;/h4&gt;
+
+&lt;p&gt;There are two divergent schools of thought regarding the design of an API. A
+&lt;strong&gt;humane interface&lt;/strong&gt; provides many convenience methods. It leads to shorter
+client code and a more fluid program structure. A &lt;strong&gt;minimal interface&lt;/strong&gt; is just
+as complete but with a minimum of redundancy. Client code has one clear
+approach that tends to be longer.&lt;/p&gt;
+
+&lt;p&gt;When designing a published API, it is good to keep in mind that changes are
+very risky once the API is published. A client may be using the API and
+removing it may cause the client code to break. As a result, API methods are
+often deprecated and not removed (Java 9 removed APIs that had been
+deprecated since Java 2 and the repercussions will last almost as long). For
+this reason it is better to design a &lt;em&gt;minimal interface&lt;/em&gt; and set a very high
+bar for adding convenience methods in future releases.&lt;/p&gt;
+
+&lt;p&gt;In reality risk mitigation through compactness is advice squarely aimed at
+framework and library API sets where business constraints are non-existent or
+negligible (the business has no business changing the definition of a natural
+logarithm). For business objects, whose API are primarily defined by business
+needs and must preserve business invariants, compactness is not as high a
+priority.&lt;/p&gt;
+
+&lt;p&gt;Instead business domain APIs should be first factored along the lines drawn by
+use cases which allow mutation. Business data that is needed to support command
+use cases should be encapsulated within a sub-domain. Then within that
+sub-domain compactness can play a secondary role in the design of the APIs.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; In the library checkout service the business may decide that a
+checkout is allowed only if&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the borrower has less than \$10.00 in fines&lt;/li&gt;
+&lt;li&gt;the borrower has fewer than 25 items out already&lt;/li&gt;
+&lt;li&gt;a copy of the item is not already being held by the borrower&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;An analysis of the use cases would show that the fines are primarily managed by
+another subdomain (library accounts). But the number and particulars of the
+held items belong to the same service that manages checkout. So for this reason
+a single API that returns the collection of all items held by a particular
+borrower would be both compact and appropriate. The same subdomain would also
+expose an API that allows a new item to be added the list (&lt;code&gt;BorrowItem&lt;/code&gt;).
+Adding an item would be accomplished transactionally, so that two checkouts
+done at the same time from different clients would not both succeed if they
+would put that borrower over the 25 item limit or if they both attempted to add
+the same item.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;consistent&#34;&gt;Consistent&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Naming.&lt;/li&gt;
+&lt;li&gt;Uniformity of behavior.&lt;/li&gt;
+&lt;li&gt;Error handling.&lt;/li&gt;
+&lt;li&gt;Event publishing.&lt;/li&gt;
+&lt;li&gt;Documentation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;clear-aka-intuitive&#34;&gt;Clear (aka Intuitive)&lt;/h4&gt;
+
+&lt;p&gt;Closely related to paper testing.
+Proportional to how close your solution is to the true model.
+Warning not to overestimate your own intuition (confirmation bias).&lt;/p&gt;
+
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;In the &lt;a href=&#34;../use-case-driven-design-3/&#34;&gt;third post&lt;/a&gt; in this series I will delve into the design process,
+continuing to use the on-line library service example.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>SOLID Web UI Components</title>

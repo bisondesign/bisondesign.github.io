@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:image" content="/images/brendan-church-182747.jpg"/>
+    
+
+
+
+<meta name="twitter:title" content="A Probabilistic Algorithm for Palindrome Detection"/>
+<meta name="twitter:description" content=""/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="A Probabilistic Algorithm for Palindrome Detection &middot; Bison Design" />
+  	<meta property="og:site_name" content="Bison Design" />
+  	<meta property="og:url" content="http://bisondesign.net/post/fast-palindrome-validation/" />
+
+    
+       <meta property="og:image" content="/images/brendan-church-182747.jpg"/>
+    
+
+    
+    <meta property="og:description" content="" />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-10-07T20:21:11-05:00" />
+
+    
+    <meta property="article:tag" content="Algorithms" />
+    
+    <meta property="article:tag" content="Design" />
+    
+    
+
+    <title>A Probabilistic Algorithm for Palindrome Detection &middot; Bison Design</title>
+
+    
+    <meta name="description" content="Abstract  This paper describes a probabilistic approach to detecting if a sequence is a palindrome. The approach is simple yet efficient, having O(N) performanc" />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/css/prism.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Bison Design" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.18.1" />
+
+    <link rel="canonical" href="http://bisondesign.net/post/fast-palindrome-validation/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "logo": "http://bisondesign.net//images/bison.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://bisondesign.net//images/bison.png",
+            "width": 250,
+            "height": 250
+        }, 
+        
+        "url": "http://bisondesign.net/",
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ],
+        "description": "Software architect, Lover of mathematics."
+        
+    },
+    "headline": "A Probabilistic Algorithm for Palindrome Detection",
+    "name": "A Probabilistic Algorithm for Palindrome Detection",
+    "wordCount":  1547 ,
+    "timeRequired": "PT8M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": "en"
+    },
+    "url": "http://bisondesign.net/post/fast-palindrome-validation/",
+    "datePublished": "2017-10-07T20:21Z",
+    "dateModified": "2017-10-07T20:21Z",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://bisondesign.net/images/brendan-church-182747.jpg",
+        "width": 3000,
+        "height": 1445
+    },
+    
+    "keywords": "Algorithms, Design",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://bisondesign.net/post/fast-palindrome-validation/"
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, 
+        {
+              delimiters: [
+                  {left: "$$", right: "$$", display: true},
+                  {left: "\\[", right: "\\]", display: true},
+                  {left: "$", right: "$", display: false},
+                  {left: "\\(", right: "\\)", display: false}
+              ]
+          }
+        );
+      });
+    </script>
+
+    
+
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/adobrowolski">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/">Blog</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+  
+  <header class="main-header post-head" style="background-image: url(/images/brendan-church-182747.jpg)">
+  
+  <nav class="main-nav overlay clearfix">
+
+
+  
+      <a class="blog-logo" href="http://bisondesign.net/"><img src="/images/bison.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">A Probabilistic Algorithm for Palindrome Detection</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-10-07T20:21:11-05:00">
+            Oct 7, 2017
+          </time>
+        
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/algorithms/">#Algorithms</a></span>
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/design/">#Design</a></span>
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      
+
+<h3 id="abstract">Abstract</h3>
+
+<blockquote>
+<p>This paper describes a probabilistic approach to detecting if a sequence is a
+    palindrome. The approach is simple yet efficient, having O(N) performance and
+    O(1) memory overhead, suitable for real-time applications. The chance of a
+    false negative is zero, while the chance of a false positive is less than $1$ in
+    $10^{19}$. Below we describe the algorithm, its motivation, and prove
+    the correctness of the results.</p>
+</blockquote>
+
+<h3 id="introduction">Introduction</h3>
+
+<p>A palindrome is string that reads the same forwards as backwards. More
+formally, given a finite alphabet $\Omega$ and a sequence $S={s_1, s_2,&hellip;s_n}$
+where $s_i \in \Omega$ for all $i \leq n$ we call
+$S^\prime={s_n,s_{n-1}&hellip;, s_1}$ the inverse of $S$.</p>
+
+<p>Existing exact algorithms determine if a sequence is a palindrome by doing a
+item by item comparison of the sequence and its reverse. This in turn requires
+either keeping the sequence in memory or the ability to traverse the sequence
+in both directions simultaneously. When extra memory is prohibitive because of
+the size of the sequence and if the option to traverse the sequence in two
+directions does not exist (e.g. with a feed), other approaches are necessary.</p>
+
+<h3 id="theory">Theory</h3>
+
+<p>This paper describes a probabilistic approach implemented by calculating two
+hash values for the sequence as it is being traversed. These hash values have
+the special property that their product can be used to determine with certainty
+that the generating sequence is not a palindrome. The same product can also
+determine with very high probability if the sequence is a palindrome.
+Algorithms with a bounded probability of error are called probabilistic
+algorithms.</p>
+
+<p>Our hash values must be members of a non-commutative group, for reasons that
+will soon be clear. We chose to use ${\mathbb Z}^{2\times2}$, the group of
+$2\times 2$ integer matrices. Members of our alphabet must map to distinct
+members of this group. We assume $\Omega$ is ordered and that each member has a
+distinct ordinal value denoted $a =\mathrm{ord}(s)$ where $a\in\mathbb{Z}^+$.</p>
+
+<p>We define an injection
+$f:\Omega\mapsto{\mathbb Z}^{2\times2}$ as follows:</p>
+
+<p>$$f(s) = \left[\begin{matrix}
+1 &amp; \mathrm{ord}(s)\cr
+p &amp; 1
+\end{matrix}\right] = \left[\begin{matrix}
+1 &amp; a\cr
+p &amp; 1
+\end{matrix}\right]$$</p>
+
+<p>where $p$ represents a large fixed prime. The determinant of $f(s)$ is $1-ap$,
+which is never zero over $\mathbb{Z}$, so every such matrix has an inverse.
+From now on, without loss of generality, we will assume that the alphabet
+$\Omega=\mathbb{Z}^+$.</p>
+
+<p>If $A_i = f(s_i)$ then the two hash values for string $S$ will be denoted
+$h(S)$ and $h^\prime(S)$ and will be defined as follows:</p>
+
+<p>$$ h(S) = \prod_{i=1}^n A_i \qquad h^\prime(S) = \prod_{i=1}^n A_i^{-1} $$</p>
+
+<p>The implementation computes these product matrices as the sequence ${s_i}$ is
+consumed. We will show that if the product $h(S)\cdot h^\prime(S)$ is the identity
+matrix $\bf1$ then $S$ is a palindrome or a very rare condition occurred. If
+the multiplication operation were commutative the product of $h(S)$ and $h^\prime(S)$
+would always be the identity and a different approach would have been needed.</p>
+
+<p><strong>Theorem 1.</strong> If $S$ is a palindrome, then $h(S)\cdot h^\prime(S)=\bf1$.</p>
+
+<p><strong>Proof.</strong> We will expand the multiplication and take advantage of the
+associativity of matrix multiplication to reduce the product. We also use the
+fact that since $S$ is a palindrome, $A_i=A_{n-i+1}$.</p>
+
+<p>$$
+\begin{aligned}
+    h(S)\cdot h^\prime(S)
+    &amp;= \prod_{i=1}^n A<em>i \cdot \prod</em>{i=1}^n A_i^{-1} <br />
+    &amp;= \left(A_1 A<em>2\cdots A</em>{n-1}A_n \right)\cdot \left(A_1^{-1} A_2^{-1}\cdots A_n^{-1}\right) <br />
+    &amp;= \left(A_1 A_2\cdots A_2 A_1 \right)\cdot \left(A_1^{-1} A_2^{-1}\cdots A_2^{-1}A_1^{-1}\right) <br />
+    &amp;= \left(A_1 A_2\cdots A_2 \right)\left(A_1 \cdot A_1^{-1}\right)\left( A_2^{-1}\cdots A_2^{-1}A_1^{-1}\right) <br />
+    &amp;= \left(A_1 A_2\cdots A_2 \right)\cdot{\bf1}\cdot \left(A_2^{-1}\cdots A_2^{-1}A_1^{-1}\right) <br />
+    &amp;= \left(A_1 A_2\cdots A_2 \right)\cdot\left(A_2^{-1}\cdots A_2^{-1}A_1^{-1}\right) <br />
+    &amp;= \cdots = {\bf1}
+\end{aligned}
+$$</p>
+
+<p>This completes the proof. $\Box$</p>
+
+<p>The proof holds in the domain $\mathbb{Z}$ because an inverse exists for all
+$A_i$. In practice the computations will take place with 64 bit integers. We
+would like to extend the proof to the quotient ring of integers modulo m
+denoted $\mathbb{Z}/m\mathbb{Z}$ where $m=2^{64}$. In this ring not every
+$A_i$ has an inverse. The determinant of $A_i$ is zero when $pa_i=1 (mod m)$. By the
+extended Euclidean algorithm the inverse of p exists modulo m if and only if
+$\gcd(p,m)=1$. Since $m=2^{64}$ and p is prime p has a unique inverse, denoted
+by $p^{-1}$.</p>
+
+<p><strong>Theorem 2.</strong> If $S$ is a palindrome, then $h(S)\cdot h^\prime(S)=\bf1$ when matrix
+multiplication is done modulo m, so long as $a_i \neq p^{-1}$ for any $i$.</p>
+
+<p><strong>Proof.</strong> Matrix multiplication, even under modulo arithmetic, is still
+associative. The proof is elementary and uses the congruence sum rule and congruence
+product rule to show that
+$(AB)C=A(BC) \pmod m$ for all $A,B,C\in{\mathbb Z}^{n\times n}$.
+We note that the inner multiplication of expression above still holds using
+modulo arithmetic:</p>
+
+<p>$$\begin{aligned}
+A_1 \cdot A_1^{-1}
+  &amp;= \left[\begin{matrix}1 &amp; a_1 \cr p &amp; 1 \end{matrix}\right]
+     \left[\begin{matrix}1 &amp; -a_1\cr -p &amp; 1 \end{matrix}\right]
+     \cdot{1\over 1-pa_i} <br />
+  &amp;= \left[\begin{matrix}(1-pa_i) \pmod m &amp; 0 \cr 0 &amp; (1-pa_i) \pmod m\end{matrix}
+        \right]\cdot{1\over (1-pa_i) \pmod m} <br />
+  &amp;= {\bf1}
+  \end{aligned}
+$$</p>
+
+<p>since $pa_i\neq1$. Working from the inside of the expression out, all pairs
+again result in the identity. So the proof above still holds under modulo
+arithmetic. $\Box$</p>
+
+<p><strong>Theorem 3.</strong> If $h(S)\cdot h^\prime(S)=\bf1$ then $S$ is a palindrome.</p>
+
+<p><strong>Proof.</strong> Let $H(S) = h(S)h^\prime(S)$. $|H(S)|=1$ since $|AB|=|A|\cdot|B|$ and
+$|A^{-1}|=1/|A|$. The values of $H(S)$ range over ${\mathbb Q}^{2\times2}$ with
+three degrees of freedom. Only one of these values is the identity matrix. The
+likelihood of a random sequence $S$ producing $|H(S)|=1$ is intuitively zero.</p>
+
+<blockquote>
+<p>I am stuck here. I can argue statistically since the function $H(S)$
+has some properties of a hash function. I can demonstrate this empirically
+with tests - but those would be done using modulo arithmetic.</p>
+</blockquote>
+
+<p><strong>Theorem 4.</strong> If $h(S)\cdot h^\prime(S)=\bf1$ when matrix multiplication is done
+modulo m, then $S$ is a palindrome with a statistically small chance of error.</p>
+
+<p><strong>Proof.</strong></p>
+
+<blockquote>
+<p>I am stuck here too. This should follow from Theorem 3, however, because the
+range collapses to a finite range under modulo multiplication there is a
+greater chance that distinct non-palindromic inputs will collide with the
+identity.</p>
+</blockquote>
+
+<h3 id="implementation">Implementation</h3>
+
+<p>The implementation of the algorithm closely follows the description above using
+64 bit signed integers. Signed integers using two&rsquo;s complement representation
+are unsigned 64 bit integers with the upper half of the range shifted to
+represent the negatives making the arguments from modulo arithmetic valid.
+The code syntax in this section uses the language &ldquo;go&rdquo;.</p>
+
+<p>The hash matrix values are computed iteratively on a stream of entries of the
+sequence $S$. The structure <code>hash</code> consists of three values:</p>
+
+<pre><code>type hash struct {
+    p   Matrix // running product of the A_i matrices
+    q   Matrix // running product of the A_i inverses (scaled by det)
+    det int64  // running product of the A_i determinant values
+}
+</code></pre>
+
+<p><code>Matrix</code> is a basic implementation of ${\mathbb Z}^{2\times2}$ supporting the
+operations <code>Times</code>, <code>Inverse</code>, and <code>Det</code>. Multiplying the inverse of $A_i$ by the
+determinant allows us to avoid floating point arithmetic and is the reason why
+the determinant must be stored separately. The initial value of this structure
+uses 1 for the determinant and the identity for the two matrix values:</p>
+
+<pre><code class="language-golang">one := Matrix{1, 0, 0, 1}
+
+func NewHash() *hash {
+    return &amp;hash{one, one, 1}
+}
+</code></pre>
+
+<p>The mapping $f(a)$ makes use of a hash prime. In our implementation we use
+P=1099511628211. The inverse of P is -3560570117845248645, making this an
+illegal value for an element of $S$. Since $S$ only contains positive ordinal
+values, this restriction is not checked when a new <code>int64</code> is added to the
+hash.</p>
+
+<p>Adding an item from the sequence to hash <code>h</code> requires mapping the item to a
+matrix and multiplying this matrix and its scaled inverse into the appropriate
+fields of the hash.</p>
+
+<pre><code class="language-golang">P := 1099511628211
+
+func (h *hash) Add(r int64) {
+    m := Matrix{1, r, P, 1}
+    mInv := Matrix{1, -r, -P, 1}
+
+    h.p = h.p.Times(m)
+    h.q = h.q.Times(mInv)
+    h.det = h.det * m.Det()
+}
+</code></pre>
+
+<p>The methods <code>Times</code> and <code>Det</code> have the usual definitions for matrix
+multiplication and determinant, and are not shown here. The test for a
+palindrome is also straightforward:</p>
+
+<pre><code class="language-golang">func (h *hash) IsPalindrome() bool {
+    temp := h.p.Times(h.q)
+    return temp == one.Scale(h.det)
+}
+</code></pre>
+
+<p>If the product of the two matrix values <code>p</code> and <code>q</code> is equal to the identity
+matrix scaled by the determinant, then the sequence is likely a palindrome.</p>
+
+<h3 id="limitations">Limitations</h3>
+
+<p>The starting point of the palindrome detection is fixed. As a consequence this
+approach cannot be used to find the longest palindrome embedded in a stream. It
+can be used to detect the moment at which a stream becomes palindromic (running
+detection). For example, the following stream of letters becomes palindromic at
+points marked with a ^.</p>
+
+<pre><code>ABBABCCBABBAABBABCCBABBABC...
+---^-------^-----------^--...
+</code></pre>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>The author believes the algorithm presented here is a novel approach. It might
+have some applications in fields where detecting symmetry is important but the
+data set is very large, such as genetics.</p>
+
+<h3 id="references">References</h3>
+
+<ul>
+<li>Z. Galil, “Real-time algorithms for string-matching and palindrome recognition,”
+8th Ann. ACM Symp. Theory Comput., Hershey, Pensylvania, May, 1976, pp. 161–173.</li>
+<li>Z. Galil, &ldquo;Two fast simulations which imply some fast string matching and
+palindrome-recognition algorithms,&rdquo; Information Processing Letters, Volume 4,
+Issue 4, Pages 85-87 <a href="http://www.sciencedirect.com/science/article/pii/0020019076900508">http://www.sciencedirect.com/science/article/pii/0020019076900508</a></li>
+<li>Slisenko, A.O., &ldquo;A simplified proof of the real-time recognizability of palindromes
+on turing machines,&rdquo; J&nbsp;Math Sci (1981) 15: 68. <a href="https://doi.org/10.1007/BF01404109">https://doi.org/10.1007/BF01404109</a></li>
+<li>Manacher, Glenn (1975), &ldquo;A new linear-time &ldquo;on-line&rdquo; algorithm for finding the
+smallest initial palindrome of a string&rdquo;, Journal of the ACM, 22 (3): 346–351,
+doi:10.<sup>1145</sup>&frasl;<sub>321892</sub>.321896.</li>
+<li>Wikipedia, <a href="https://en.wikipedia.org/wiki/Palindromic_sequence">https://en.wikipedia.org/wiki/Palindromic_sequence</a> (Genetics)</li>
+<li>1968: Ian D. Macdonald: The Theory of Groups</li>
+<li><a href="https://golang.org/ref/spec">https://golang.org/ref/spec</a></li>
+</ul>
+
+<p>[](<a href="https://slideblast.com/tight-tradeoffs-for-approximating-palindromes-in-streams_5956c7671723dd84eb3600e6.html">https://slideblast.com/tight-tradeoffs-for-approximating-palindromes-in-streams_5956c7671723dd84eb3600e6.html</a>)</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="http://bisondesign.net/" style="background-image: url(/images/bison.png)"><span class="hidden">Andrew Dobrowolski's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://bisondesign.net/">Andrew Dobrowolski</a></h4>
+  
+  <p>Software architect, Lover of mathematics.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Ann Arbor, MI</span>
+    <span class="author-link icon-link"><a href="http://bisondesign.net/">http://bisondesign.net/</a></span>
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=A%20Probabilistic%20Algorithm%20for%20Palindrome%20Detection&nbsp;-&nbsp;Bison%20Design&amp;url=http%3a%2f%2fbisondesign.net%2fpost%2ffast-palindrome-validation%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fbisondesign.net%2fpost%2ffast-palindrome-validation%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2fbisondesign.net%2fpost%2ffast-palindrome-validation%2f&amp;description=A%20Probabilistic%20Algorithm%20for%20Palindrome%20Detection"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fbisondesign.net%2fpost%2ffast-palindrome-validation%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'www-bisondesign-net';
+  var disqus_url = 'http:\/\/bisondesign.net\/post\/fast-palindrome-validation\/';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+  </footer>
+</article>
+
+</main>
+
+
+  <aside class="read-next">
+  
+      <a class="read-next-story" style="background-image: url(/images/lptzrhqh6hplqmtedyra.jpg)" href="/post/use-case-driven-design-2/">
+          <section class="post">
+              <h2>Use-case Driven API Design (part 2)</h2>
+              
+          </section>
+      </a>
+  
+  
+      <a class="read-next-story prev" style="background-image: url(/images/samuel-zeller-39197.jpg)" href="/post/solid-UI-components-go/">
+          <section class="post">
+              <h2>Implementing SOLID UI Components using Go</h2>
+          </section>
+      </a>
+  
+</aside>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Bison Design</a> All rights reserved - 2017</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/prism.js"></script>
+    
+</body>
+</html>
+
