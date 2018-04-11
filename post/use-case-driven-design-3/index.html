@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:image" content="/images/lptzrhqh6hplqmtedyra.jpg"/>
+    
+
+
+
+<meta name="twitter:title" content="Use-case Driven API Design (part 3)"/>
+<meta name="twitter:description" content=""/>
+<meta name="twitter:site" content="@"/>
+
+
+
+  	<meta property="og:title" content="Use-case Driven API Design (part 3) &middot; Bison Design" />
+  	<meta property="og:site_name" content="Bison Design" />
+  	<meta property="og:url" content="http://bisondesign.net/post/use-case-driven-design-3/" />
+
+    
+       <meta property="og:image" content="/images/lptzrhqh6hplqmtedyra.jpg"/>
+    
+
+    
+    <meta property="og:description" content="" />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2018-04-07T20:21:11-05:00" />
+
+    
+    <meta property="article:tag" content="API" />
+    
+    <meta property="article:tag" content="Design" />
+    
+    
+
+    <title>Use-case Driven API Design (part 3) &middot; Bison Design</title>
+
+    
+    <meta name="description" content="Use-case Driven API Design In the previous post, I discussed the qualities of a good public API design. Knowing where we want to go does not automatically tell " />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="/css/prism.css" />
+
+    
+
+    
+
+    
+      
+          <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Bison Design" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.18.1" />
+
+    <link rel="canonical" href="http://bisondesign.net/post/use-case-driven-design-3/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "",
+        "logo": "http://bisondesign.net//images/bison.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "",
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://bisondesign.net//images/bison.png",
+            "width": 250,
+            "height": 250
+        }, 
+        
+        "url": "http://bisondesign.net/",
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ],
+        "description": "Software architect, Lover of mathematics."
+        
+    },
+    "headline": "Use-case Driven API Design (part 3)",
+    "name": "Use-case Driven API Design (part 3)",
+    "wordCount":  1780 ,
+    "timeRequired": "PT9M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": "en"
+    },
+    "url": "http://bisondesign.net/post/use-case-driven-design-3/",
+    "datePublished": "2018-04-07T20:21Z",
+    "dateModified": "2018-04-07T20:21Z",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://bisondesign.net/images/lptzrhqh6hplqmtedyra.jpg",
+        "width": 3000,
+        "height": 1445
+    },
+    
+    "keywords": "API, Design",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://bisondesign.net/post/use-case-driven-design-3/"
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+
+    
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, 
+        {
+              delimiters: [
+                  {left: "$$", right: "$$", display: true},
+                  {left: "\\[", right: "\\]", display: true},
+                  {left: "$", right: "$", display: false},
+                  {left: "\\(", right: "\\)", display: false}
+              ]
+          }
+        );
+      });
+    </script>
+
+    
+
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/adobrowolski">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="/">Blog</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+  
+  <header class="main-header post-head" style="background-image: url(/images/lptzrhqh6hplqmtedyra.jpg)">
+  
+  <nav class="main-nav overlay clearfix">
+
+
+  
+      <a class="blog-logo" href="http://bisondesign.net/"><img src="/images/bison.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Use-case Driven API Design (part 3)</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2018-04-07T20:21:11-05:00">
+            Apr 7, 2018
+          </time>
+        
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/api/">#API</a></span>
+         
+          <span class="post-tag small"><a href="http://bisondesign.net/tags/design/">#Design</a></span>
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      
+
+<h3 id="use-case-driven-api-design">Use-case Driven API Design</h3>
+
+<p>In the <a href="../use-case-driven-design-2/">previous post</a>, I discussed the qualities of a good public API
+design. Knowing where we want to go does not automatically tell us how to get
+there. Today I wanted to travel from Detroit to Chicago so I got in the car and
+opened <a href="https://www.google.com/maps/dir/Detroit,+Michigan/Chicago,+Illinois">Google Maps</a> on my phone. It told me exactly how to get where I
+wanted to go. But before 1800 Chicago was much harder to find; there were no
+roads, no maps, no directions. Often it feels that way when we embark on the
+design of an API that does not yet exist. We are blazing a trail into new
+territory. We know the end goal - a clear, complete, compact, consistent API -
+and we can recognize it when we see it. But where do we start? We start from
+the end of course!</p>
+
+<p>Requirements for an API must begin as a collection of tasks that the consumers
+of the API will accomplish. These should be written down in the language of the
+domain. If the person responsible for these requirements is not a subject
+matter expert (SME) then please try hard to consult with one. Getting the
+language right is crucial at this stage. The language will contain nouns and
+verbs that should become part of the final API methods. If you are using
+Domain Driven Design (DDD) these will also appear in the implementation.</p>
+
+<h4 id="nomenclature-aka-ubiquitous-language">Nomenclature (aka Ubiquitous Language)</h4>
+
+<p>Ubiquitous language is simply the language of a particular domain. Your API
+should be built on that language. Your object domain model should only include
+those domain concepts, the same ones understood and used by users and subject
+matter experts. It should not contain concepts related to the technical
+implementation of your computing solution.</p>
+
+<p>For example, a flight reservation model would include nouns like person,
+passenger, reservation, scheduled flight, flight description, and airport. It
+would also include verbs or verb phrases like add reservation, add passenger,
+check space, add scheduled flight, and add airport.</p>
+
+<p>These terms should be well documented. It is important to understand that the
+scope of a language can be fairly narrow. To an enterprise like a telephone
+company the term telephone will mean different things in different contexts
+(e.g. repair vs billing vs routing). Each domain will have its own dictionary.</p>
+
+<h4 id="queries">Queries</h4>
+
+<p>The term &lsquo;command query separation&rsquo; (or CQS) was coined by Bertrand Meyer in
+his influential book <a href="https://www.amazon.com/Object-Oriented-Software-Construction-Prentice-Hall-International">Object-Oriented Software Construction</a> It states that
+every method should either be a command that performs an action, or a query
+that returns data to the caller, but not both. Methods that return data should
+have no observable side effects (except perhaps drowsiness).</p>
+
+<p>Adherence to CQS is not necessary for a good API design, but it is helpful to
+keep these two types of API separate since they present different challenges to
+scalability. For example, in a distributed system the results of queries can be
+cached to improve performance at the cost of some staleness. On the other hand,
+commands need special handling to avoid race conditions that might lead to data
+corruption.</p>
+
+<p>When designing APIs it is first helpful to rule out &ldquo;reports&rdquo;. Like queries,
+reports return data to the caller typically by getting some information from
+many database tables and doing some joins. The business is usually pretty lax
+about report requirements depending on how they are used. A report may be
+generated only for compliance and archived. Or it may be used to look for
+anomalies in a historical record of transactions. Typically reports span a
+fixed period of time. Most importantly, reports rarely interact with the domain
+model of the system, being generated instead from the data store. It is this
+that allows us to ignore reports when designing an API for the domain.</p>
+
+<p>By contrast data that is presented to the user in a user interface is intended
+for immediate action. It represents the current status of the domain and so it
+must aspire to higher standards of &ldquo;freshness&rdquo;. Still, the business should be
+willing to provide guidance on how stale a piece of data in the UI can be
+allowed to get. Freshness is useful to include, along with the data in the UI,
+some indication of the staleness of that data to inform the end user (e.g. &ldquo;as
+of 10:25:20 on 02/13/18&rdquo; or &ldquo;valid until 9am ET on 04/08/18&rdquo;).</p>
+
+<p>The key design consideration for a query is that all the data in the result
+should come from one subdomain. If the query must aggregate information from
+other subdomains then it will be slow and inconsistent. This may lead to some
+surprising results in the UI.</p>
+
+<blockquote>
+<p><strong>Example.</strong> In the online library domain there are several use cases which are
+pure queries.  These correspond to listing or giving detailed information for
+the following entities:</p>
+
+<ul>
+<li>branches</li>
+<li>accounts</li>
+<li>items on loan</li>
+<li>reservation requests</li>
+<li>items in the library collection</li>
+</ul>
+
+<p>The design should keep the data returned by these query API orthogonal.  How
+this is accomplished in practice when relationships exist between entities is
+by embedding identifiers in the response.  For example, an item on loan is an
+item held by a specific account at a specific branch.  These three identifiers
+would be part of the data returned.</p>
+</blockquote>
+
+<p>A well factored (orthogonal) set of API need not be inefficient. In the
+specific case of REST over HTTP, the results of query operations are typically
+cached. This is made easier when the allowed staleness of the data is defined.</p>
+
+<blockquote>
+<p><strong>Example.</strong> The list of branches or items in a library&rsquo;s collection needn&rsquo;t
+be updated more than once a day. Repeated requests that are served from a cache
+require no processing on the server end. To aggregate the same information on
+the server (requiring no extra code with OData or GraphQL) means that the back
+end is responsible, adding more processing, latency, and harming scalability.
+Magic is never cheap.</p>
+</blockquote>
+
+<h3 id="commands">Commands</h3>
+
+<p>An API call with side effects is called a <code>command</code>. Commands should be
+designed not to fail to the maximum extent possible. Ideally a command provides
+no response, not even a success or failure status, allowing it to be handled
+asynchronously. This advice requires some justification.</p>
+
+<p>When a command fails it can usually fail in many different ways:</p>
+
+<ul>
+<li>the command request could not be properly interpreted</li>
+<li>the agent issuing the command may not have permission</li>
+<li>the server hosting target resource may be unavailable</li>
+<li>the target resource itself may have been deleted</li>
+<li>the target resource state may have changed in an incompatible way</li>
+</ul>
+
+<p>We can group all failures into one of four categories:</p>
+
+<ol>
+<li>good request; temporary unavailability of the target</li>
+<li>good request; permanent unavailability of the target</li>
+<li>bad request; client side coding error (bad use of the API)</li>
+<li>bad request; invalid state (user error, race condition, etc)</li>
+</ol>
+
+<p>Some of these require a retry, some will fail no matter how many times a retry
+is attempted. Some require a client side code change, and some require the user
+to fix and try again.</p>
+
+<p>A well designed system will understand the classification of the failure and
+automatically handle all of these on behalf of the client, when possible. For
+example, a retry can be attempted if a resource is not available. This too may
+eventually fail. In some cases there is nothing that can be done on the client
+side. The client code cannot fix itself for example (well not yet). In all
+cases when recovery from a failure cannot be done, the user will need to be
+informed, but no client side code need be written to handle that other than
+reloading the current state of client side objects from the server.</p>
+
+<p>Informing the user of a failure, if done asynchronously, will allow the client
+to be more responsive. The client code should be designed with this in mind: do
+not assume success of your commands but wait for notification (via a domain
+event) that your command succeeded. In a distributed multi-user system clients
+should be notified of changes done by other users via domain events anyway.</p>
+
+<p>Subdomains were important for keeping queries fast. They are equally important
+for avoiding race conditions in commands. Subdomains define the transactional
+boundaries of the data. There are two important rules to follow:</p>
+
+<ol>
+<li>A single command may change data only in one subdomain.</li>
+<li>A command must be atomic: all changes or none must be committed.</li>
+</ol>
+
+<p>This suggests that the design of domains and subdomains follows the use cases
+since use cases identify all the data which must be changed. We should keep the
+subdomains small. Surprisingly this advice will break the data of one entity
+across subdomain boundaries. For example in Amazon the price of an item for
+sale and the description of the item are in different domains.</p>
+
+<p>When business rules require changes to data in multiple subdomains this can still
+be accomplished by commands that work in unison within the domain. For example
+if the availability of rooms on a particular night in a hotel affects the room
+price, then the price subdomain must listen to room booked events from the room
+booking subdomain and adjust prices accordingly.</p>
+
+<p>Finally, long lived workflows that involve commands from multiple domains can
+be implemented as <a href="https://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf" title="Original paper by Hector Garcia-Molina">sagas</a>. Sagas are an improvement on two phase commit.
+Sagas support the notion of getting distributed agreement of a process (with
+reduced guarantees). In case of failures, all involved domains that
+successfully executed their commands perform compensating commands. If you want
+to use sagas then for every command also define an idempotent compensating
+command. Sagas are very cool but their discussion is beyond the scope of this
+post.</p>
+
+<blockquote>
+<p><strong>Example.</strong> In the online library domain there are several use cases which are
+commands.  These correspond to creating, deleting, or updating the following
+entities:</p>
+
+<ul>
+<li>add, delete, or edit account</li>
+<li>renew items on loan</li>
+<li>create or cancel reservation requests</li>
+</ul>
+
+<p>Branches and items held by a branch are not mutable via the API, simplifying
+the implementation.  Branches are specified in a configuration file while the
+collection of their items (e.g. books) is maintained in an external system.  The
+renewal of an item or the creation of a reservation request can fail due to
+race conditions with other users.  The success of any mutation command is
+reported via a domain event.</p>
+</blockquote>
+
+<p>When a command fails (which should be rare) the user instigating the command
+can be notified, either in the UI via a notification area, or by email.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>In the next post I will show an API design for the online library system we
+have been discussing, starting from the use cases.  I will discuss testing the
+API and then conclude with some thoughts about how the use case driven approach
+applies to REST API design.</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="http://bisondesign.net/" style="background-image: url(/images/bison.png)"><span class="hidden">Andrew Dobrowolski's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://bisondesign.net/">Andrew Dobrowolski</a></h4>
+  
+  <p>Software architect, Lover of mathematics.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Ann Arbor, MI</span>
+    <span class="author-link icon-link"><a href="http://bisondesign.net/">http://bisondesign.net/</a></span>
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Use-case%20Driven%20API%20Design%20%28part%203%29&nbsp;-&nbsp;Bison%20Design&amp;url=http%3a%2f%2fbisondesign.net%2fpost%2fuse-case-driven-design-3%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fbisondesign.net%2fpost%2fuse-case-driven-design-3%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2fbisondesign.net%2fpost%2fuse-case-driven-design-3%2f&amp;description=Use-case%20Driven%20API%20Design%20%28part%203%29"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fbisondesign.net%2fpost%2fuse-case-driven-design-3%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'www-bisondesign-net';
+  var disqus_url = 'http:\/\/bisondesign.net\/post\/use-case-driven-design-3\/';
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+  </footer>
+</article>
+
+</main>
+
+
+  <aside class="read-next">
+  
+      <a class="read-next-story" style="background-image: url(/images/lptzrhqh6hplqmtedyra.jpg)" href="/post/use-case-driven-design-2/">
+          <section class="post">
+              <h2>Use-case Driven API Design (part 2)</h2>
+              
+          </section>
+      </a>
+  
+  
+      <a class="read-next-story prev" style="background-image: url(/images/jj-thompson-142854.jpg)" href="/post/solid-UI-components/">
+          <section class="post">
+              <h2>SOLID Web UI Components</h2>
+          </section>
+      </a>
+  
+</aside>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Bison Design</a> All rights reserved - 2017</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/prism.js"></script>
+    
+</body>
+</html>
+

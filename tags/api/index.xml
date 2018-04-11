@@ -274,5 +274,229 @@ continuing to use the on-line library service example.&lt;/p&gt;
 </description>
     </item>
     
+    <item>
+      <title>Use-case Driven API Design (part 3)</title>
+      <link>http://bisondesign.net/post/use-case-driven-design-3/</link>
+      <pubDate>Sat, 07 Apr 2018 20:21:11 -0500</pubDate>
+      
+      <guid>http://bisondesign.net/post/use-case-driven-design-3/</guid>
+      <description>
+
+&lt;h3 id=&#34;use-case-driven-api-design&#34;&gt;Use-case Driven API Design&lt;/h3&gt;
+
+&lt;p&gt;In the &lt;a href=&#34;../use-case-driven-design-2/&#34;&gt;previous post&lt;/a&gt;, I discussed the qualities of a good public API
+design. Knowing where we want to go does not automatically tell us how to get
+there. Today I wanted to travel from Detroit to Chicago so I got in the car and
+opened &lt;a href=&#34;https://www.google.com/maps/dir/Detroit,+Michigan/Chicago,+Illinois&#34;&gt;Google Maps&lt;/a&gt; on my phone. It told me exactly how to get where I
+wanted to go. But before 1800 Chicago was much harder to find; there were no
+roads, no maps, no directions. Often it feels that way when we embark on the
+design of an API that does not yet exist. We are blazing a trail into new
+territory. We know the end goal - a clear, complete, compact, consistent API -
+and we can recognize it when we see it. But where do we start? We start from
+the end of course!&lt;/p&gt;
+
+&lt;p&gt;Requirements for an API must begin as a collection of tasks that the consumers
+of the API will accomplish. These should be written down in the language of the
+domain. If the person responsible for these requirements is not a subject
+matter expert (SME) then please try hard to consult with one. Getting the
+language right is crucial at this stage. The language will contain nouns and
+verbs that should become part of the final API methods. If you are using
+Domain Driven Design (DDD) these will also appear in the implementation.&lt;/p&gt;
+
+&lt;h4 id=&#34;nomenclature-aka-ubiquitous-language&#34;&gt;Nomenclature (aka Ubiquitous Language)&lt;/h4&gt;
+
+&lt;p&gt;Ubiquitous language is simply the language of a particular domain. Your API
+should be built on that language. Your object domain model should only include
+those domain concepts, the same ones understood and used by users and subject
+matter experts. It should not contain concepts related to the technical
+implementation of your computing solution.&lt;/p&gt;
+
+&lt;p&gt;For example, a flight reservation model would include nouns like person,
+passenger, reservation, scheduled flight, flight description, and airport. It
+would also include verbs or verb phrases like add reservation, add passenger,
+check space, add scheduled flight, and add airport.&lt;/p&gt;
+
+&lt;p&gt;These terms should be well documented. It is important to understand that the
+scope of a language can be fairly narrow. To an enterprise like a telephone
+company the term telephone will mean different things in different contexts
+(e.g. repair vs billing vs routing). Each domain will have its own dictionary.&lt;/p&gt;
+
+&lt;h4 id=&#34;queries&#34;&gt;Queries&lt;/h4&gt;
+
+&lt;p&gt;The term &amp;lsquo;command query separation&amp;rsquo; (or CQS) was coined by Bertrand Meyer in
+his influential book &lt;a href=&#34;https://www.amazon.com/Object-Oriented-Software-Construction-Prentice-Hall-International&#34;&gt;Object-Oriented Software Construction&lt;/a&gt; It states that
+every method should either be a command that performs an action, or a query
+that returns data to the caller, but not both. Methods that return data should
+have no observable side effects (except perhaps drowsiness).&lt;/p&gt;
+
+&lt;p&gt;Adherence to CQS is not necessary for a good API design, but it is helpful to
+keep these two types of API separate since they present different challenges to
+scalability. For example, in a distributed system the results of queries can be
+cached to improve performance at the cost of some staleness. On the other hand,
+commands need special handling to avoid race conditions that might lead to data
+corruption.&lt;/p&gt;
+
+&lt;p&gt;When designing APIs it is first helpful to rule out &amp;ldquo;reports&amp;rdquo;. Like queries,
+reports return data to the caller typically by getting some information from
+many database tables and doing some joins. The business is usually pretty lax
+about report requirements depending on how they are used. A report may be
+generated only for compliance and archived. Or it may be used to look for
+anomalies in a historical record of transactions. Typically reports span a
+fixed period of time. Most importantly, reports rarely interact with the domain
+model of the system, being generated instead from the data store. It is this
+that allows us to ignore reports when designing an API for the domain.&lt;/p&gt;
+
+&lt;p&gt;By contrast data that is presented to the user in a user interface is intended
+for immediate action. It represents the current status of the domain and so it
+must aspire to higher standards of &amp;ldquo;freshness&amp;rdquo;. Still, the business should be
+willing to provide guidance on how stale a piece of data in the UI can be
+allowed to get. Freshness is useful to include, along with the data in the UI,
+some indication of the staleness of that data to inform the end user (e.g. &amp;ldquo;as
+of 10:25:20 on 02/13/18&amp;rdquo; or &amp;ldquo;valid until 9am ET on 04/08/18&amp;rdquo;).&lt;/p&gt;
+
+&lt;p&gt;The key design consideration for a query is that all the data in the result
+should come from one subdomain. If the query must aggregate information from
+other subdomains then it will be slow and inconsistent. This may lead to some
+surprising results in the UI.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; In the online library domain there are several use cases which are
+pure queries.  These correspond to listing or giving detailed information for
+the following entities:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;branches&lt;/li&gt;
+&lt;li&gt;accounts&lt;/li&gt;
+&lt;li&gt;items on loan&lt;/li&gt;
+&lt;li&gt;reservation requests&lt;/li&gt;
+&lt;li&gt;items in the library collection&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The design should keep the data returned by these query API orthogonal.  How
+this is accomplished in practice when relationships exist between entities is
+by embedding identifiers in the response.  For example, an item on loan is an
+item held by a specific account at a specific branch.  These three identifiers
+would be part of the data returned.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A well factored (orthogonal) set of API need not be inefficient. In the
+specific case of REST over HTTP, the results of query operations are typically
+cached. This is made easier when the allowed staleness of the data is defined.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; The list of branches or items in a library&amp;rsquo;s collection needn&amp;rsquo;t
+be updated more than once a day. Repeated requests that are served from a cache
+require no processing on the server end. To aggregate the same information on
+the server (requiring no extra code with OData or GraphQL) means that the back
+end is responsible, adding more processing, latency, and harming scalability.
+Magic is never cheap.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;commands&#34;&gt;Commands&lt;/h3&gt;
+
+&lt;p&gt;An API call with side effects is called a &lt;code&gt;command&lt;/code&gt;. Commands should be
+designed not to fail to the maximum extent possible. Ideally a command provides
+no response, not even a success or failure status, allowing it to be handled
+asynchronously. This advice requires some justification.&lt;/p&gt;
+
+&lt;p&gt;When a command fails it can usually fail in many different ways:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the command request could not be properly interpreted&lt;/li&gt;
+&lt;li&gt;the agent issuing the command may not have permission&lt;/li&gt;
+&lt;li&gt;the server hosting target resource may be unavailable&lt;/li&gt;
+&lt;li&gt;the target resource itself may have been deleted&lt;/li&gt;
+&lt;li&gt;the target resource state may have changed in an incompatible way&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We can group all failures into one of four categories:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;good request; temporary unavailability of the target&lt;/li&gt;
+&lt;li&gt;good request; permanent unavailability of the target&lt;/li&gt;
+&lt;li&gt;bad request; client side coding error (bad use of the API)&lt;/li&gt;
+&lt;li&gt;bad request; invalid state (user error, race condition, etc)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Some of these require a retry, some will fail no matter how many times a retry
+is attempted. Some require a client side code change, and some require the user
+to fix and try again.&lt;/p&gt;
+
+&lt;p&gt;A well designed system will understand the classification of the failure and
+automatically handle all of these on behalf of the client, when possible. For
+example, a retry can be attempted if a resource is not available. This too may
+eventually fail. In some cases there is nothing that can be done on the client
+side. The client code cannot fix itself for example (well not yet). In all
+cases when recovery from a failure cannot be done, the user will need to be
+informed, but no client side code need be written to handle that other than
+reloading the current state of client side objects from the server.&lt;/p&gt;
+
+&lt;p&gt;Informing the user of a failure, if done asynchronously, will allow the client
+to be more responsive. The client code should be designed with this in mind: do
+not assume success of your commands but wait for notification (via a domain
+event) that your command succeeded. In a distributed multi-user system clients
+should be notified of changes done by other users via domain events anyway.&lt;/p&gt;
+
+&lt;p&gt;Subdomains were important for keeping queries fast. They are equally important
+for avoiding race conditions in commands. Subdomains define the transactional
+boundaries of the data. There are two important rules to follow:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;A single command may change data only in one subdomain.&lt;/li&gt;
+&lt;li&gt;A command must be atomic: all changes or none must be committed.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This suggests that the design of domains and subdomains follows the use cases
+since use cases identify all the data which must be changed. We should keep the
+subdomains small. Surprisingly this advice will break the data of one entity
+across subdomain boundaries. For example in Amazon the price of an item for
+sale and the description of the item are in different domains.&lt;/p&gt;
+
+&lt;p&gt;When business rules require changes to data in multiple subdomains this can still
+be accomplished by commands that work in unison within the domain. For example
+if the availability of rooms on a particular night in a hotel affects the room
+price, then the price subdomain must listen to room booked events from the room
+booking subdomain and adjust prices accordingly.&lt;/p&gt;
+
+&lt;p&gt;Finally, long lived workflows that involve commands from multiple domains can
+be implemented as &lt;a href=&#34;https://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf&#34; title=&#34;Original paper by Hector Garcia-Molina&#34;&gt;sagas&lt;/a&gt;. Sagas are an improvement on two phase commit.
+Sagas support the notion of getting distributed agreement of a process (with
+reduced guarantees). In case of failures, all involved domains that
+successfully executed their commands perform compensating commands. If you want
+to use sagas then for every command also define an idempotent compensating
+command. Sagas are very cool but their discussion is beyond the scope of this
+post.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example.&lt;/strong&gt; In the online library domain there are several use cases which are
+commands.  These correspond to creating, deleting, or updating the following
+entities:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;add, delete, or edit account&lt;/li&gt;
+&lt;li&gt;renew items on loan&lt;/li&gt;
+&lt;li&gt;create or cancel reservation requests&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Branches and items held by a branch are not mutable via the API, simplifying
+the implementation.  Branches are specified in a configuration file while the
+collection of their items (e.g. books) is maintained in an external system.  The
+renewal of an item or the creation of a reservation request can fail due to
+race conditions with other users.  The success of any mutation command is
+reported via a domain event.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;When a command fails (which should be rare) the user instigating the command
+can be notified, either in the UI via a notification area, or by email.&lt;/p&gt;
+
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;In the next post I will show an API design for the online library system we
+have been discussing, starting from the use cases.  I will discuss testing the
+API and then conclude with some thoughts about how the use case driven approach
+applies to REST API design.&lt;/p&gt;
+</description>
+    </item>
+    
   </channel>
 </rss>
